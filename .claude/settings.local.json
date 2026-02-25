@@ -9,8 +9,12 @@
       "Bash(git add -A)",
       "Bash(GIT_EDITOR=true git rebase --continue)",
       "Bash(git push origin --delete master)",
-      "Bash(git branch -u origin/main main)"
+      "Bash(git branch -u origin/main main)",
+      "Bash(git commit:*)",
+      "Bash(git --version)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\hrmcn\\MCreatorWorkspaces\\extra_video_settings"
     ]
   }
 }
-
