@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="extra_video_settings"
+version="1.0"
+displayName="Extra Video Settings"
+description='''Restores vanilla video settings (FOV Effects, Glint Speed, etc.) that Embeddium removes.'''
+
+[[dependencies.extra_video_settings]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.extra_video_settings]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.extra_video_settings]]
+    modId="embeddium"
+    mandatory=true
+    versionRange="[0.1.0,)"
+    ordering="AFTER"
+    side="CLIENT"

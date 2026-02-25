@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init)",
+      "Bash(git remote add origin git@github.com:hrmcngs/extra_video_settings.git)",
+      "Bash(git checkout --theirs README.md)",
+      "Bash(git add README.md)",
+      "Bash(git rebase --continue)",
+      "Bash(git add -A)",
+      "Bash(GIT_EDITOR=true git rebase --continue)"
+    ]
+  }
+}
