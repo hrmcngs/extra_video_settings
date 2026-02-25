@@ -35,3 +35,8 @@ JAVA_HOME="C:/Program Files/Java/jdk-17" ./gradlew build
 ## インストール
 
 `extra_video_settings-1.0.jar` を `.minecraft/mods/` フォルダに入れる。
+
+## ライセンス
+
+MIT License
+
