@@ -7,7 +7,10 @@
       "Bash(git add README.md)",
       "Bash(git rebase --continue)",
       "Bash(git add -A)",
-      "Bash(GIT_EDITOR=true git rebase --continue)"
+      "Bash(GIT_EDITOR=true git rebase --continue)",
+      "Bash(git push origin --delete master)",
+      "Bash(git branch -u origin/main main)"
     ]
   }
 }
+
