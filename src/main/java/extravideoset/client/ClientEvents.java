@@ -11,6 +11,8 @@ import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import extravideoset.ExtraVideoSettingsMod;
+
 @Mod.EventBusSubscriber(modid = "extra_video_settings", value = Dist.CLIENT)
 public class ClientEvents {
 
@@ -18,9 +20,12 @@ public class ClientEvents {
 	public static void onScreenInit(ScreenEvent.Init.Post event) {
 		Screen screen = event.getScreen();
 
-		// Add button to Embeddium/Sodium options screen
 		String className = screen.getClass().getName();
+		ExtraVideoSettingsMod.debugLog("Screen init: {}", className);
+
+		// Add button to Embeddium/Sodium options screen
 		if (className.contains("SodiumOptionsGUI")) {
+			ExtraVideoSettingsMod.debugLog("Detected Embeddium/Sodium screen, adding Vanilla Options button");
 			event.addListener(Button.builder(
 					Component.translatable("extra_video_settings.button"),
 					btn -> {
@@ -32,6 +37,7 @@ public class ClientEvents {
 
 		// Add button to main Options screen as well
 		if (screen instanceof OptionsScreen) {
+			ExtraVideoSettingsMod.debugLog("Detected vanilla Options screen, adding Vanilla Options button");
 			event.addListener(Button.builder(
 					Component.translatable("extra_video_settings.button"),
 					btn -> {

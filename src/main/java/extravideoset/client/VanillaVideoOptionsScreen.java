@@ -8,6 +8,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
+import extravideoset.ExtraVideoSettingsMod;
+
 public class VanillaVideoOptionsScreen extends Screen {
 	private final Screen parent;
 	private final Options options;
@@ -21,6 +23,7 @@ public class VanillaVideoOptionsScreen extends Screen {
 
 	@Override
 	protected void init() {
+		ExtraVideoSettingsMod.debugLog("VanillaVideoOptionsScreen.init() - width={}, height={}", this.width, this.height);
 		this.list = new OptionsList(this.minecraft, this.width, this.height, 32, this.height - 32, 25);
 
 		// Vanilla video/accessibility options that Embeddium removes
@@ -59,6 +62,7 @@ public class VanillaVideoOptionsScreen extends Screen {
 
 	@Override
 	public void onClose() {
+		ExtraVideoSettingsMod.debugLog("VanillaVideoOptionsScreen closed, saving options");
 		this.options.save();
 		this.minecraft.setScreen(this.parent);
 	}
