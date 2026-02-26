@@ -11,7 +11,16 @@
       "Bash(git push origin --delete master)",
       "Bash(git branch -u origin/main main)",
       "Bash(git commit:*)",
-      "Bash(git --version)"
+      "Bash(git --version)",
+      "Bash(else echo \"run/ directory does not exist\")",
+      "Bash(fi)",
+      "Bash(./gradlew tasks --all)",
+      "Bash(./gradlew dependencies --configuration runtimeClasspath)",
+      "Bash(chmod +x /c/Users/hrmcn/MCreatorWorkspaces/extra_video_settings/build.sh /c/Users/hrmcn/MCreatorWorkspaces/extra_video_settings/test.sh)",
+      "Bash(wsl -e bash -c \"which java 2>/dev/null && java -version 2>&1; find /usr/lib/jvm -maxdepth 1 -name ''*17*'' 2>/dev/null; ls /usr/lib/jvm/ 2>/dev/null\")",
+      "Bash(wsl bash -c \"ls ''/mnt/c/Program Files/Java/jdk-17/bin/java'' 2>/dev/null && echo ''EXISTS'' || echo ''NOT FOUND''\")",
+      "Bash(wsl bash -c \"ls ''/mnt/c/Program Files/Java/jdk-17/bin/'' 2>/dev/null | head -5\")",
+      "Bash(wsl bash -c \"ls ''/mnt/c/Program Files/Java/jdk-17/bin/java''* 2>/dev/null; ls ''/mnt/c/Program Files/Java/jdk-17/bin/java.exe'' 2>/dev/null\")"
     ],
     "additionalDirectories": [
       "C:\\Users\\hrmcn\\MCreatorWorkspaces\\extra_video_settings"

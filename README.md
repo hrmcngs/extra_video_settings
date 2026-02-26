@@ -24,13 +24,35 @@ Embeddiumがバニラのビデオ設定画面を置き換えた際に消えて�
 - **設定画面** → 「バニラ設定」ボタン
 - **Embeddiumビデオ設定画面** → 右下に「Vanilla Options」ボタン
 
-## ビルド方法
+## ビルド・テスト
 
-```
-JAVA_HOME="C:/Program Files/Java/jdk-17" ./gradlew build
+### JAR ビルド
+
+```bash
+./build.sh
 ```
 
 出力: `build/libs/extra_video_settings-1.0.jar`
+
+### テストプレイ（Embeddium + Oculus 入り）
+
+```bash
+./test.sh
+```
+
+Embeddium 0.3.31 と Oculus 1.8.0 が自動で読み込まれた状態で Minecraft が起動する。
+
+### 手動で実行する場合
+
+```bash
+# ビルドのみ
+JAVA_HOME="C:/Program Files/Java/jdk-17" ./gradlew build
+
+# テストプレイ
+JAVA_HOME="C:/Program Files/Java/jdk-17" ./gradlew runClient
+```
+
+> WSL の場合は `JAVA_HOME="/mnt/c/Program Files/Java/jdk-17"` を使用する。
 
 ## インストール
 

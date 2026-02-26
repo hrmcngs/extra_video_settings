@@ -48,8 +48,10 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
-    // Embeddium 0.3.31 for 1.20.1 (compile only - not bundled)
+    // Embeddium 0.3.31 for 1.20.1
     compileOnly fg.deobf("curse.maven:embeddium-908741:5681725")
+    // Runtime: Embeddium loaded via classpath, Oculus via run/mods/ (mixin refmap compatibility)
+    runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
 }
 
 tasks.withType(JavaCompile).configureEach {
