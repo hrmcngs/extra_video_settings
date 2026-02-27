@@ -19,6 +19,7 @@ import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStor
 import org.embeddedt.embeddium.api.OptionPageConstructionEvent;
 import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
+import extravideoset.EVSConfig;
 import extravideoset.ExtraVideoSettingsMod;
 
 public class EmbeddiumIntegration {
@@ -83,6 +84,16 @@ public class EmbeddiumIntegration {
 						.setName(Component.translatable("options.entityShadows"))
 						.setTooltip(Component.translatable("extra_video_settings.tooltip.entity_shadows"))
 						.setBinding(new VanillaBooleanOptionBinding(options.entityShadows()))
+						.setControl(TickBoxControl::new)
+						.setImpact(OptionImpact.LOW)
+						.build())
+				.add(OptionImpl.createBuilder(Boolean.class, VANILLA_STORAGE)
+						.setId(OptionIdentifier.create("extra_video_settings", "debug_logging", Boolean.class))
+						.setName(Component.translatable("extra_video_settings.debug_logging"))
+						.setTooltip(Component.translatable("extra_video_settings.tooltip.debug_logging"))
+						.setBinding(
+								(opts, val) -> EVSConfig.DEBUG_LOGGING.set(val),
+								(opts) -> EVSConfig.isDebugEnabled())
 						.setControl(TickBoxControl::new)
 						.setImpact(OptionImpact.LOW)
 						.build())

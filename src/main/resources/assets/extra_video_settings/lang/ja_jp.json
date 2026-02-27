@@ -5,5 +5,7 @@
   "extra_video_settings.tooltip.damage_tilt_strength": "ダメージを受けた時のカメラの傾き量を調整します。",
   "extra_video_settings.tooltip.glint_speed": "エンチャントの光沢アニメーションの速度を調整します。",
   "extra_video_settings.tooltip.glint_strength": "エンチャントの光沢の強度を調整します。",
-  "extra_video_settings.tooltip.entity_shadows": "エンティティの地面への影の表示を切り替えます。"
+  "extra_video_settings.tooltip.entity_shadows": "エンティティの地面への影の表示を切り替えます。",
+  "extra_video_settings.debug_logging": "デバッグログ",
+  "extra_video_settings.tooltip.debug_logging": "Extra Video Settingsのデバッグログを有効にします。"
 }

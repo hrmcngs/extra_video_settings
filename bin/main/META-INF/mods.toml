@@ -4,6 +4,7 @@ license="MIT"
 
 [[mods]]
 modId="extra_video_settings"
+logoFile="icon.png"
 version="1.0"
 displayName="Extra Video Settings"
 description='''Restores vanilla video settings (FOV Effects, Glint Speed, etc.) that Embeddium removes.'''

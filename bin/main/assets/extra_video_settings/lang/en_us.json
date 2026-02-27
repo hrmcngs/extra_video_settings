@@ -5,5 +5,7 @@
   "extra_video_settings.tooltip.damage_tilt_strength": "Controls how much the camera tilts when taking damage.",
   "extra_video_settings.tooltip.glint_speed": "Controls the speed of the enchantment glint animation.",
   "extra_video_settings.tooltip.glint_strength": "Controls the intensity of the enchantment glint.",
-  "extra_video_settings.tooltip.entity_shadows": "Toggles the display of entity shadows on the ground."
+  "extra_video_settings.tooltip.entity_shadows": "Toggles the display of entity shadows on the ground.",
+  "extra_video_settings.debug_logging": "Debug Logging",
+  "extra_video_settings.tooltip.debug_logging": "Enable debug logging for Extra Video Settings."
 }
