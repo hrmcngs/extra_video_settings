@@ -1,4 +1,9 @@
 {
-  "extra_video_settings.button": "Vanilla Options",
-  "extra_video_settings.screen.title": "Vanilla Video Settings"
+  "extra_video_settings.tooltip.fov_effect_scale": "Controls how much the field of view changes with movement speed.",
+  "extra_video_settings.tooltip.screen_effect_scale": "Controls the intensity of screen distortion effects like nausea.",
+  "extra_video_settings.tooltip.darkness_effect_scale": "Controls the intensity of the Darkness effect pulsing.",
+  "extra_video_settings.tooltip.damage_tilt_strength": "Controls how much the camera tilts when taking damage.",
+  "extra_video_settings.tooltip.glint_speed": "Controls the speed of the enchantment glint animation.",
+  "extra_video_settings.tooltip.glint_strength": "Controls the intensity of the enchantment glint.",
+  "extra_video_settings.tooltip.entity_shadows": "Toggles the display of entity shadows on the ground."
 }

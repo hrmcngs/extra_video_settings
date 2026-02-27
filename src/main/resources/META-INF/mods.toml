@@ -24,7 +24,7 @@ description='''Restores vanilla video settings (FOV Effects, Glint Speed, etc.) 
 
 [[dependencies.extra_video_settings]]
     modId="embeddium"
-    mandatory=true
+    mandatory=false
     versionRange="[0.1.0,)"
     ordering="AFTER"
     side="CLIENT"

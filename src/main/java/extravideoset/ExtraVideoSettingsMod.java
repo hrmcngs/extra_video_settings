@@ -3,9 +3,12 @@ package extravideoset;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+
+import extravideoset.client.EmbeddiumIntegration;
 
 @Mod("extra_video_settings")
 public class ExtraVideoSettingsMod {
@@ -14,6 +17,11 @@ public class ExtraVideoSettingsMod {
 
 	public ExtraVideoSettingsMod() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EVSConfig.CLIENT_SPEC);
+
+		if (ModList.get().isLoaded("embeddium")) {
+			EmbeddiumIntegration.init();
+		}
+
 		LOGGER.info("Extra Video Settings loaded");
 	}
 

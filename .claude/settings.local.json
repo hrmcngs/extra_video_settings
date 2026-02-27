@@ -20,10 +20,45 @@
       "Bash(wsl -e bash -c \"which java 2>/dev/null && java -version 2>&1; find /usr/lib/jvm -maxdepth 1 -name ''*17*'' 2>/dev/null; ls /usr/lib/jvm/ 2>/dev/null\")",
       "Bash(wsl bash -c \"ls ''/mnt/c/Program Files/Java/jdk-17/bin/java'' 2>/dev/null && echo ''EXISTS'' || echo ''NOT FOUND''\")",
       "Bash(wsl bash -c \"ls ''/mnt/c/Program Files/Java/jdk-17/bin/'' 2>/dev/null | head -5\")",
-      "Bash(wsl bash -c \"ls ''/mnt/c/Program Files/Java/jdk-17/bin/java''* 2>/dev/null; ls ''/mnt/c/Program Files/Java/jdk-17/bin/java.exe'' 2>/dev/null\")"
+      "Bash(wsl bash -c \"ls ''/mnt/c/Program Files/Java/jdk-17/bin/java''* 2>/dev/null; ls ''/mnt/c/Program Files/Java/jdk-17/bin/java.exe'' 2>/dev/null\")",
+      "WebFetch(domain:www.curseforge.com)",
+      "Bash(\"C:/Program Files/Java/jdk-17/bin/jar\" tf \"/c/Users/hrmcn/.gradle/caches/forge_gradle/deobf_dependencies/curse/maven/embeddium-908741/5681725_mapped_official_1.20.1/embeddium-908741-5681725_mapped_official_1.20.1.jar\")",
+      "Bash(\"C:/Program Files/Java/jdk-17/bin/javap\" -public \"net.minecraft.client.gui.GuiGraphics\" -classpath \"/c/Users/hrmcn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0/forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar\")",
+      "Bash(\"C:/Program Files/Java/jdk-17/bin/javap\" -public net.minecraft.client.gui.GuiGraphics -cp \"/c/Users/hrmcn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0_mapped_official_1.20.1/forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar\")",
+      "Bash(\"C:/Program Files/Java/jdk-17/bin/javap\" net.minecraft.client.gui.GuiGraphics -classpath \"C:/Users/hrmcn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0_mapped_official_1.20.1/forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar\")",
+      "Bash(\"C:/Program Files/Java/jdk-17/bin/jar\" tf \"C:/Users/hrmcn/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0_mapped_official_1.20.1/forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar\")",
+      "Bash(\"C:/Program Files/Java/jdk-17/bin/jar\" tf \"/c/Users/hrmcn/.gradle/caches/forge_gradle/deobf_dependencies/curse/maven/embeddium-908741/5681725_mapped_official_1.20.1/embeddium-908941-5681725_mapped_official_1.20.1.jar\")",
+      "Bash(jar -version)",
+      "Read(//c/Program Files/**)",
+      "Bash(__NEW_LINE_ad24609fe323fcb0__ /c/Program Files/Java/jdk-17/bin/javap -c -private '/tmp/embeddium_extracted/org/embeddedt/embeddium/api/OptionGroupConstructionEvent.class')",
+      "Bash(__NEW_LINE_6aaf6fc011cd0755__ /c/Program Files/Java/jdk-17/bin/javap -c -private '/tmp/embeddium_extracted/org/embeddedt/embeddium/api/eventbus/EventHandlerRegistrar.class')",
+      "Bash(__NEW_LINE_379574e3d2f2e6d1__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/OptionImpl$Builder.class')",
+      "Bash(__NEW_LINE_f51b050cee6b235d__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/control/SliderControl.class')",
+      "Bash(__NEW_LINE_5152ae3f6ee135b8__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/control/TickBoxControl.class')",
+      "Bash(__NEW_LINE_598d3463f2bdccdf__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/binding/compat/VanillaBooleanOptionBinding.class')",
+      "Bash(__NEW_LINE_9e685f58949f0717__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/storage/MinecraftOptionsStorage.class')",
+      "Bash(__NEW_LINE_febbf210cea69d3b__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder.class')",
+      "Bash(__NEW_LINE_5ee6ff622fa82a13__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/binding/GenericBinding.class')",
+      "Bash(__NEW_LINE_1465005e798a1231__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/binding/OptionBinding.class')",
+      "Bash(__NEW_LINE_dc1fb87784a88be8__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/control/ControlValueFormatter.class')",
+      "Bash(__NEW_LINE_f1a533fb61f9657e__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/control/Control.class')",
+      "Bash(__NEW_LINE_7c245ff716e21589__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/Option.class')",
+      "Bash(__NEW_LINE_55011182b501dc6c__ /c/Program Files/Java/jdk-17/bin/javap -c '/tmp/embeddium_extracted/me/jellysquid/mods/sodium/client/gui/options/control/CyclingControl.class')",
+      "Bash(export JAVA_HOME=\"C:/Program Files/Java/jdk-17\")",
+      "Bash(for jar in *.jar)",
+      "Bash(do if unzip -l \"$jar\")",
+      "Bash(then echo \"=== $jar ===\")",
+      "Bash(done)",
+      "Bash(zip -d \"The four primitives and Weapons-forge-1.20.1--1.0.jar\" \"assets/minecraft/font/default.json\" \"assets/minecraft/font/\")",
+      "Bash(where.exe python python3 py)",
+      "Bash(\"$JAVA_HOME/bin/jar\" --list --file \"/c/Users/hrmcn/AppData/Roaming/.minecraft/mods/The four primitives and Weapons-forge-1.20.1--1.0.jar\")",
+      "Bash(\"C:/Program Files/Java/jdk-17/bin/jar.exe\" --list --file \"C:/Users/hrmcn/AppData/Roaming/.minecraft/mods/The four primitives and Weapons-forge-1.20.1--1.0.jar\")"
     ],
     "additionalDirectories": [
-      "C:\\Users\\hrmcn\\MCreatorWorkspaces\\extra_video_settings"
+      "C:\\Users\\hrmcn\\MCreatorWorkspaces\\extra_video_settings",
+      "C:\\Users\\hrmcn\\.gradle\\caches\\modules-2\\files-2.1\\curse.maven\\embeddium-908741\\5681725\\bb2fa8f3e493af16af9160d049f96c614a1faf2f",
+      "C:\\Users\\hrmcn\\MCreatorWorkspaces\\minecraft_armor_weapon\\src\\main\\resources\\assets\\minecraft",
+      "C:\\Users\\hrmcn\\MCreatorWorkspaces\\minecraft_armor_weapon\\src\\main\\resources\\data\\minecraft\\font"
     ]
   }
 }

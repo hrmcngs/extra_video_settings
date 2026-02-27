@@ -1,20 +1,14 @@
 #!/bin/bash
 set -e
 
-echo "=== Test Play: extra_video_settings ==="
-echo "Mods: Embeddium 0.3.31 + Oculus 1.8.0"
+echo "=== Test Play: extra_video_settings (dev) ==="
+echo "Mods: Embeddium 0.3.31"
+echo "(Oculus は開発環境非対応のため test-full.sh を使用)"
 echo ""
 
-# Oculus を run/mods/ に配置（fg.deobf経由だとMixin refmapが壊れるため）
-MODS_DIR="run/mods"
-OCULUS_JAR="$MODS_DIR/oculus-1.8.0.jar"
-OCULUS_URL="https://www.cursemaven.com/curse/maven/oculus-581495/6020952/oculus-581495-6020952.jar"
-
-mkdir -p "$MODS_DIR"
-if [ ! -f "$OCULUS_JAR" ]; then
-    echo "Downloading Oculus 1.8.0..."
-    curl -L -o "$OCULUS_JAR" "$OCULUS_URL"
-    echo "Done."
+# Oculus が run/mods/ に残っていると落ちるので除外
+if [ -f "run/mods/oculus-1.8.0.jar" ]; then
+    mv "run/mods/oculus-1.8.0.jar" "run/mods/oculus-1.8.0.jar.disabled"
 fi
 
 if [ -d "/mnt/c" ]; then

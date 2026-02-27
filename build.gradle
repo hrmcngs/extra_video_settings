@@ -27,6 +27,10 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
+            // Mixin refmap remapping: SRG -> official (dev環境でEmbeddiumのMixinを動作させる)
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${project.buildDir}/createSrgToMcp/output.srg"
+
             mods {
                 extra_video_settings {
                     source sourceSets.main
@@ -50,7 +54,6 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
     // Embeddium 0.3.31 for 1.20.1
     compileOnly fg.deobf("curse.maven:embeddium-908741:5681725")
-    // Runtime: Embeddium loaded via classpath, Oculus via run/mods/ (mixin refmap compatibility)
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
 }
 

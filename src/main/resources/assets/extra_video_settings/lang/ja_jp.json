@@ -1,4 +1,9 @@
 {
-  "extra_video_settings.button": "バニラ設定",
-  "extra_video_settings.screen.title": "バニラビデオ設定"
+  "extra_video_settings.tooltip.fov_effect_scale": "移動速度に応じた視野角の変化量を調整します。",
+  "extra_video_settings.tooltip.screen_effect_scale": "吐き気などの画面歪みエフェクトの強度を調整します。",
+  "extra_video_settings.tooltip.darkness_effect_scale": "暗闇エフェクトの脈動の強度を調整します。",
+  "extra_video_settings.tooltip.damage_tilt_strength": "ダメージを受けた時のカメラの傾き量を調整します。",
+  "extra_video_settings.tooltip.glint_speed": "エンチャントの光沢アニメーションの速度を調整します。",
+  "extra_video_settings.tooltip.glint_strength": "エンチャントの光沢の強度を調整します。",
+  "extra_video_settings.tooltip.entity_shadows": "エンティティの地面への影の表示を切り替えます。"
 }

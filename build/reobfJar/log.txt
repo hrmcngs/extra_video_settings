@@ -138,7 +138,6 @@ Processing entries
 Conflicting propagated mapping for extravideoset/client/VanillaVideoOptionsScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
 Conflicting propagated mapping for extravideoset/client/VanillaVideoOptionsScreen/onClose()V from net/minecraft/client/gui/screens/Screen/onClose()V: onClose -> m_7379_
 Conflicting propagated mapping for extravideoset/client/VanillaVideoOptionsScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
-Conflicting propagated mapping for net/minecraft/client/gui/screens/OptionsScreen/onClose()V from net/minecraft/client/gui/screens/Screen/onClose()V: onClose -> m_7379_
 Adding extras
 Sorting
 Writing Output: C:\Users\hrmcn\MCreatorWorkspaces\extra_video_settings\build\reobfJar\output.jar
@@ -151,8 +150,9 @@ Writing Output: C:\Users\hrmcn\MCreatorWorkspaces\extra_video_settings\build\reo
   assets/extra_video_settings/lang/en_us.json
   assets/extra_video_settings/lang/ja_jp.json
   extravideoset/
+  extravideoset/EVSConfig.class
   extravideoset/ExtraVideoSettingsMod.class
   extravideoset/client/
-  extravideoset/client/ClientEvents.class
+  extravideoset/client/EmbeddiumIntegration.class
   extravideoset/client/VanillaVideoOptionsScreen.class
   pack.mcmeta
