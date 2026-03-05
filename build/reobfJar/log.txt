@@ -135,6 +135,9 @@ Adding Libraries to Inheritance
 Reading Input: C:\Users\hrmcn\MCreatorWorkspaces\extra_video_settings\build\libs\extra_video_settings-1.0.jar
 Adding input to inheritance map
 Processing entries
+Conflicting propagated mapping for extravideoset/client/ProfileScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
+Conflicting propagated mapping for extravideoset/client/ProfileScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
+Conflicting propagated mapping for net/minecraft/client/gui/screens/OptionsScreen/onClose()V from net/minecraft/client/gui/screens/Screen/onClose()V: onClose -> m_7379_
 Adding extras
 Sorting
 Writing Output: C:\Users\hrmcn\MCreatorWorkspaces\extra_video_settings\build\reobfJar\output.jar
@@ -151,5 +154,8 @@ Writing Output: C:\Users\hrmcn\MCreatorWorkspaces\extra_video_settings\build\reo
   extravideoset/ExtraVideoSettingsMod.class
   extravideoset/client/
   extravideoset/client/EmbeddiumIntegration.class
+  extravideoset/client/ProfileScreen.class
+  extravideoset/client/SettingsCommand.class
+  extravideoset/client/SettingsProfileManager.class
   icon.png
   pack.mcmeta

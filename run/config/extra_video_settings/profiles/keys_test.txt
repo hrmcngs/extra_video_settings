@@ -1,0 +1,38 @@
+# Key Bindings Profile: test
+# Saved: 2026-03-05 17:46:32
+# Total: 34 keys
+
+key.advancements=key.keyboard.l
+key.attack=key.mouse.left
+key.back=key.keyboard.s
+key.chat=key.keyboard.t
+key.command=key.keyboard.slash
+key.drop=key.keyboard.q
+key.forward=key.keyboard.w
+key.fullscreen=key.keyboard.f11
+key.hotbar.1=key.keyboard.1
+key.hotbar.2=key.keyboard.2
+key.hotbar.3=key.keyboard.3
+key.hotbar.4=key.keyboard.4
+key.hotbar.5=key.keyboard.5
+key.hotbar.6=key.keyboard.6
+key.hotbar.7=key.keyboard.7
+key.hotbar.8=key.keyboard.8
+key.hotbar.9=key.keyboard.9
+key.inventory=key.keyboard.e
+key.jump=key.keyboard.space
+key.left=key.keyboard.a
+key.loadToolbarActivator=key.keyboard.x
+key.pickItem=key.mouse.middle
+key.playerlist=key.keyboard.tab
+key.right=key.keyboard.d
+key.saveToolbarActivator=key.keyboard.c
+key.screenshot=key.keyboard.f2
+key.smoothCamera=key.keyboard.unknown
+key.sneak=key.keyboard.left.shift
+key.socialInteractions=key.keyboard.p
+key.spectatorOutlines=key.keyboard.unknown
+key.sprint=key.keyboard.left.control
+key.swapOffhand=key.keyboard.f
+key.togglePerspective=key.keyboard.f5
+key.use=key.mouse.right

@@ -7,5 +7,30 @@
   "extra_video_settings.tooltip.glint_strength": "エンチャントの光沢の強度を調整します。",
   "extra_video_settings.tooltip.entity_shadows": "エンティティの地面への影の表示を切り替えます。",
   "extra_video_settings.debug_logging": "デバッグログ",
-  "extra_video_settings.tooltip.debug_logging": "Extra Video Settingsのデバッグログを有効にします。"
+  "extra_video_settings.tooltip.debug_logging": "Extra Video Settingsのデバッグログを有効にします。",
+
+  "extra_video_settings.profiles": "プロファイル...",
+  "extra_video_settings.profiles.title": "設定プロファイル",
+  "extra_video_settings.profiles.name": "プロファイル名:",
+  "extra_video_settings.profiles.name_hint": "プロファイル名を入力",
+  "extra_video_settings.profiles.name_empty": "プロファイル名を入力してください",
+  "extra_video_settings.profiles.save_keys": "キー設定を保存",
+  "extra_video_settings.profiles.save_video": "ビデオ設定を保存",
+  "extra_video_settings.profiles.load_keys": "キー設定を読込",
+  "extra_video_settings.profiles.load_video": "ビデオ設定を読込",
+  "extra_video_settings.profiles.delete_keys": "キープロファイル削除",
+  "extra_video_settings.profiles.delete_video": "ビデオプロファイル削除",
+  "extra_video_settings.profiles.keys_label": "キープロファイル:",
+  "extra_video_settings.profiles.video_label": "ビデオプロファイル:",
+  "extra_video_settings.profiles.none": "(なし)",
+
+  "extra_video_settings.command.save_keys_success": "キー設定をプロファイル '%2$s' に保存しました (%1$s個)",
+  "extra_video_settings.command.load_keys_success": "キー設定をプロファイル '%2$s' から読み込みました (%1$s個)",
+  "extra_video_settings.command.save_video_success": "設定をプロファイル '%2$s' に保存しました (%1$s個)",
+  "extra_video_settings.command.load_video_success": "設定をプロファイル '%2$s' から読み込みました (%1$s個)",
+  "extra_video_settings.command.list_profiles": "%1$s のプロファイル一覧: %2$s",
+  "extra_video_settings.command.no_profiles": "%1$s のプロファイルが見つかりません",
+  "extra_video_settings.command.delete_success": "%1$s のプロファイル '%2$s' を削除しました",
+  "extra_video_settings.command.profile_not_found": "プロファイルが見つかりません: %1$s",
+  "extra_video_settings.command.error": "エラー: %1$s"
 }

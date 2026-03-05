@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
 import extravideoset.client.EmbeddiumIntegration;
+import extravideoset.client.ProfileScreen;
+import extravideoset.client.SettingsCommand;
 
 @Mod("extra_video_settings")
 public class ExtraVideoSettingsMod {
@@ -21,6 +23,9 @@ public class ExtraVideoSettingsMod {
 		if (ModList.get().isLoaded("embeddium")) {
 			EmbeddiumIntegration.init();
 		}
+
+		SettingsCommand.init();
+		ProfileScreen.registerScreenEvent();
 
 		LOGGER.info("Extra Video Settings loaded");
 	}
