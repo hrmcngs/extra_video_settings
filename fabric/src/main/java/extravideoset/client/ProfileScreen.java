@@ -1,0 +1,240 @@
+package extravideoset.client;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.OptionsScreen;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
+import extravideoset.ExtraVideoSettingsMod;
+
+public class ProfileScreen extends Screen {
+
+	private final Screen parent;
+	private EditBox nameField;
+	private Component statusMessage = Component.literal("");
+
+	public ProfileScreen(Screen parent) {
+		super(Component.translatable("extra_video_settings.profiles.title"));
+		this.parent = parent;
+	}
+
+	// ========== OptionsScreen button hook (Fabric) ==========
+
+	public static void registerScreenEvent() {
+		ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+			if (!(screen instanceof OptionsScreen)) return;
+
+			// Find the Done button by matching its text
+			String doneText = CommonComponents.GUI_DONE.getString();
+			List<AbstractWidget> buttons = Screens.getButtons(screen);
+			AbstractWidget doneWidget = null;
+
+			for (AbstractWidget widget : buttons) {
+				if (widget instanceof Button btn && btn.getMessage().getString().equals(doneText)) {
+					doneWidget = widget;
+					break;
+				}
+			}
+
+			if (doneWidget != null) {
+				int y = doneWidget.getY();
+				final Button originalDone = (Button) doneWidget;
+				buttons.remove(doneWidget);
+
+				// Narrower Done button (left half)
+				buttons.add(Button.builder(CommonComponents.GUI_DONE,
+						b -> originalDone.onPress())
+						.bounds(scaledWidth / 2 - 200, y, 196, 20)
+						.build());
+
+				// Profiles button (right half)
+				buttons.add(Button.builder(
+						Component.translatable("extra_video_settings.profiles"),
+						b -> client.setScreen(new ProfileScreen(screen)))
+						.bounds(scaledWidth / 2 + 4, y, 196, 20)
+						.build());
+			} else {
+				// Fallback: add button in top-right corner
+				buttons.add(Button.builder(
+						Component.translatable("extra_video_settings.profiles"),
+						b -> client.setScreen(new ProfileScreen(screen)))
+						.bounds(scaledWidth - 104, 4, 100, 20)
+						.build());
+			}
+		});
+	}
+
+	// ========== Screen implementation ==========
+
+	@Override
+	protected void init() {
+		int cx = this.width / 2;
+
+		// Profile name text field
+		this.nameField = new EditBox(this.font, cx - 100, 40, 200, 20,
+				Component.translatable("extra_video_settings.profiles.name"));
+		this.nameField.setMaxLength(32);
+		this.nameField.setHint(Component.translatable("extra_video_settings.profiles.name_hint"));
+		this.addRenderableWidget(this.nameField);
+
+		// Save buttons
+		int y = 70;
+		this.addRenderableWidget(Button.builder(
+				Component.translatable("extra_video_settings.profiles.save_keys"),
+				btn -> doAction("save", "keys"))
+				.bounds(cx - 204, y, 200, 20).build());
+		this.addRenderableWidget(Button.builder(
+				Component.translatable("extra_video_settings.profiles.save_video"),
+				btn -> doAction("save", "video"))
+				.bounds(cx + 4, y, 200, 20).build());
+
+		// Load buttons
+		y += 24;
+		this.addRenderableWidget(Button.builder(
+				Component.translatable("extra_video_settings.profiles.load_keys"),
+				btn -> doAction("load", "keys"))
+				.bounds(cx - 204, y, 200, 20).build());
+		this.addRenderableWidget(Button.builder(
+				Component.translatable("extra_video_settings.profiles.load_video"),
+				btn -> doAction("load", "video"))
+				.bounds(cx + 4, y, 200, 20).build());
+
+		// Delete buttons
+		y += 24;
+		this.addRenderableWidget(Button.builder(
+				Component.translatable("extra_video_settings.profiles.delete_keys"),
+				btn -> doAction("delete", "keys"))
+				.bounds(cx - 204, y, 200, 20).build());
+		this.addRenderableWidget(Button.builder(
+				Component.translatable("extra_video_settings.profiles.delete_video"),
+				btn -> doAction("delete", "video"))
+				.bounds(cx + 4, y, 200, 20).build());
+
+		// Done button
+		this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE,
+				btn -> this.minecraft.setScreen(this.parent))
+				.bounds(cx - 100, this.height - 27, 200, 20).build());
+	}
+
+	private void doAction(String action, String type) {
+		String name = this.nameField.getValue().trim();
+		if (name.isEmpty()) {
+			this.statusMessage = Component.translatable("extra_video_settings.profiles.name_empty")
+					.withStyle(ChatFormatting.RED);
+			return;
+		}
+
+		try {
+			switch (action) {
+				case "save": {
+					int count = "keys".equals(type)
+							? SettingsProfileManager.saveKeyBindings(name)
+							: SettingsProfileManager.saveVideoSettings(name);
+					String key = "keys".equals(type)
+							? "extra_video_settings.command.save_keys_success"
+							: "extra_video_settings.command.save_video_success";
+					this.statusMessage = Component.translatable(key, count, name)
+							.withStyle(ChatFormatting.GREEN);
+					break;
+				}
+				case "load": {
+					int count = "keys".equals(type)
+							? SettingsProfileManager.loadKeyBindings(name)
+							: SettingsProfileManager.loadVideoSettings(name);
+					String key = "keys".equals(type)
+							? "extra_video_settings.command.load_keys_success"
+							: "extra_video_settings.command.load_video_success";
+					this.statusMessage = Component.translatable(key, count, name)
+							.withStyle(ChatFormatting.GREEN);
+					break;
+				}
+				case "delete": {
+					boolean deleted = SettingsProfileManager.deleteProfile(type, name);
+					if (deleted) {
+						this.statusMessage = Component.translatable(
+								"extra_video_settings.command.delete_success", type, name)
+								.withStyle(ChatFormatting.GREEN);
+					} else {
+						this.statusMessage = Component.translatable(
+								"extra_video_settings.command.profile_not_found", name)
+								.withStyle(ChatFormatting.RED);
+					}
+					break;
+				}
+			}
+		} catch (FileNotFoundException e) {
+			this.statusMessage = Component.translatable(
+					"extra_video_settings.command.profile_not_found", name)
+					.withStyle(ChatFormatting.RED);
+		} catch (Exception e) {
+			this.statusMessage = Component.translatable(
+					"extra_video_settings.command.error", e.getMessage())
+					.withStyle(ChatFormatting.RED);
+			ExtraVideoSettingsMod.LOGGER.error("Profile action failed", e);
+		}
+	}
+
+	@Override
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+		this.renderBackground(graphics, mouseX, mouseY, partialTick);
+
+		// Title
+		graphics.drawCenteredString(this.font, this.title, this.width / 2, 15, 0xFFFFFF);
+
+		// Profile name label
+		graphics.drawString(this.font,
+				Component.translatable("extra_video_settings.profiles.name"),
+				this.width / 2 - 100, 30, 0xA0A0A0);
+
+		// Status message
+		if (!this.statusMessage.getString().isEmpty()) {
+			graphics.drawCenteredString(this.font, this.statusMessage, this.width / 2, 145, 0xFFFFFF);
+		}
+
+		// Profile lists
+		int y = 165;
+		List<String> keyProfiles = SettingsProfileManager.listProfiles("keys");
+		List<String> videoProfiles = SettingsProfileManager.listProfiles("video");
+
+		graphics.drawString(this.font,
+				Component.translatable("extra_video_settings.profiles.keys_label"),
+				this.width / 2 - 200, y, 0x55FF55);
+		y += 12;
+		if (keyProfiles.isEmpty()) {
+			graphics.drawString(this.font,
+					Component.translatable("extra_video_settings.profiles.none"),
+					this.width / 2 - 190, y, 0x808080);
+		} else {
+			graphics.drawString(this.font, String.join(", ", keyProfiles),
+					this.width / 2 - 190, y, 0x55FF55);
+		}
+
+		y += 16;
+		graphics.drawString(this.font,
+				Component.translatable("extra_video_settings.profiles.video_label"),
+				this.width / 2 - 200, y, 0x55FFFF);
+		y += 12;
+		if (videoProfiles.isEmpty()) {
+			graphics.drawString(this.font,
+					Component.translatable("extra_video_settings.profiles.none"),
+					this.width / 2 - 190, y, 0x808080);
+		} else {
+			graphics.drawString(this.font, String.join(", ", videoProfiles),
+					this.width / 2 - 190, y, 0x55FFFF);
+		}
+
+		super.render(graphics, mouseX, mouseY, partialTick);
+	}
+}

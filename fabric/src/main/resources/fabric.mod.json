@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "extra_video_settings",
+  "version": "${version}",
+  "name": "Extra Video Settings",
+  "description": "Restores vanilla video settings removed by Sodium/Iris. Save and load key bindings & video settings profiles.",
+  "authors": ["hrmcn"],
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["extravideoset.ExtraVideoSettingsMod"]
+  },
+  "mixins": [
+    "extra_video_settings.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": ">=1.20.4",
+    "fabric-api": "*",
+    "iris": "*"
+  }
+}
