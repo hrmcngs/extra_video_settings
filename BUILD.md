@@ -1,18 +1,17 @@
 # ビルド手順
 
-## Forge (1.20.1)
+JAVA_HOMEの設定はシェルスクリプトに含まれているので、セットアップ不要。
+
+## テストプレイ
 
 ```bash
-./gradlew build
+bash run_clientfo.sh   # Forge (1.20.1)
+bash run_clientfa.sh   # Fabric (1.20.4)
 ```
 
-出力: `build/libs/`
-
-## Fabric (1.20.4)
+## ビルド
 
 ```bash
-cd fabric
-./gradlew build
+bash buildfo.sh   # Forge (1.20.1) → build/libs/
+bash buildfa.sh   # Fabric (1.20.4) → fabric/build/libs/
 ```
-
-出力: `fabric/build/libs/`

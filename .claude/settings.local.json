@@ -75,7 +75,13 @@
       "Bash(rm -rf \"$HOME/.gradle/caches/modules-2/files-2.1/fabric-loom\")",
       "Bash(rm -rf \"$HOME/.gradle/caches/modules-2/files-2.1/net.fabricmc\")",
       "Bash(JAVA_HOME=\"C:/Program Files/Java/jdk-21\" ./gradlew build --no-daemon -Dorg.gradle.jvmargs=\"\")",
-      "Bash(xargs head:*)"
+      "Bash(xargs head:*)",
+      "Bash(cmd.exe /c \"where java\")",
+      "Bash(cmd.exe /c \"echo %JAVA_HOME%\")",
+      "Bash(cmd.exe /c \"dir \"\"C:\\\\Program Files\\\\Java\"\"\")",
+      "Bash(wslpath \"C:\\\\Program Files\\\\Java\\\\jdk-17\")",
+      "Bash(mount)",
+      "Bash(cmd.exe /c \"cd /d C:\\\\Users\\\\hrmcn\\\\MCreatorWorkspaces\\\\extra_video_settings\\\\fabric && set JAVA_HOME=C:\\\\Program Files\\\\Java\\\\jdk-17 && set PATH=%JAVA_HOME%\\\\bin;%PATH% && rd /s /q .gradle 2>nul && rd /s /q build 2>nul && gradlew.bat clean\")"
     ],
     "additionalDirectories": [
       "C:\\Users\\hrmcn\\MCreatorWorkspaces\\extra_video_settings",
