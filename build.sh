@@ -1,22 +1,24 @@
 #!/bin/bash
+# Build all three loader variants (Forge, NeoForge, Fabric).
+# Use the per-variant scripts directly if you only want one.
 set -e
 
-echo "=== Building extra_video_settings ==="
+DIR="$(cd "$(dirname "$0")" && pwd)"
 
-if [ -d "/mnt/c" ]; then
-    # WSL: use cmd.exe to run gradlew.bat with Windows Java
-    cmd.exe /c "set JAVA_HOME=C:\Program Files\Java\jdk-17&& gradlew.bat build"
-else
-    export JAVA_HOME="${JAVA_HOME:-C:/Program Files/Java/jdk-17}"
-    ./gradlew build
-fi
+echo "=== Building Forge ==="
+"$DIR/buildfo.sh"
 
-JAR_PATH="build/libs/extra_video_settings-1.0.jar"
-if [ -f "$JAR_PATH" ]; then
-    echo ""
-    echo "=== Build successful ==="
-    echo "JAR: $JAR_PATH"
-else
-    echo "Build failed: JAR not found"
-    exit 1
-fi
+echo ""
+echo "=== Building NeoForge ==="
+"$DIR/buildne.sh"
+
+echo ""
+echo "=== Building Fabric ==="
+"$DIR/buildfa.sh"
+
+echo ""
+echo "=== All builds complete ==="
+echo "JARs:"
+ls -1 "$DIR/forge/forge/build/libs/"*.jar 2>/dev/null || echo "  (forge build/libs missing)"
+ls -1 "$DIR/forge/neoforge/build/libs/"*.jar 2>/dev/null || echo "  (neoforge build/libs missing)"
+ls -1 "$DIR/fabric/build/libs/"*.jar 2>/dev/null || echo "  (fabric build/libs missing)"

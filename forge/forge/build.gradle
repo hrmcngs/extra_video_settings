@@ -57,44 +57,14 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
 }
 
+// Share Java sources and resources from ../../common/ (loader-agnostic code)
+sourceSets {
+    main {
+        java.srcDir file('../../common/src/main/java')
+        resources.srcDir file('../../common/src/main/resources')
+    }
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-}
-
-// Forge runClient のエイリアス
-tasks.register('runClientfo') {
-    group = 'application'
-    description = 'Run Forge client (alias for runClient)'
-    dependsOn 'runClient'
-}
-
-// Fabric runClient をルートから実行
-tasks.register('runClientfa', Exec) {
-    group = 'application'
-    description = 'Run Fabric client'
-    workingDir file('fabric')
-    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-        commandLine 'cmd', '/c', 'gradlew.bat', 'runClient'
-    } else {
-        commandLine './gradlew', 'runClient'
-    }
-}
-
-// Forge build のエイリアス
-tasks.register('buildfo') {
-    group = 'build'
-    description = 'Build Forge mod (alias for build)'
-    dependsOn 'build'
-}
-
-// Fabric build をルートから実行
-tasks.register('buildfa', Exec) {
-    group = 'build'
-    description = 'Build Fabric mod'
-    workingDir file('fabric')
-    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-        commandLine 'cmd', '/c', 'gradlew.bat', 'build'
-    } else {
-        commandLine './gradlew', 'build'
-    }
 }

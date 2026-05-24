@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[20,)"
+license="MIT"
+
+[[mods]]
+modId="extra_video_settings"
+logoFile="icon.png"
+version="1.1"
+displayName="Extra Video Settings"
+description='''Restores vanilla video settings (FOV Effects, Glint Speed, etc.) that Embeddium/Sodium remove. Save and load key bindings & video settings profiles.'''
+
+[[dependencies.extra_video_settings]]
+    modId="neoforge"
+    mandatory=true
+    versionRange="[20.2,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.extra_video_settings]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.2,1.21)"
+    ordering="NONE"
+    side="BOTH"

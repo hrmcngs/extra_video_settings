@@ -3,5 +3,6 @@
     "git.scanRepositories": [
         "C:\\Users\\hrmcn\\MCreatorWorkspaces\\extra_video_settings"
     ],
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic"
 }

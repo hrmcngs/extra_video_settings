@@ -40,7 +40,9 @@ public class SettingsProfileManager {
 			writer.println();
 
 			for (KeyMapping km : sorted) {
-				writer.println(km.getName() + "=" + km.getKey().getName());
+				// saveString() returns the persistent key name (e.g. "key.keyboard.a");
+				// equivalent to Forge's km.getKey().getName() but works in Mojang mappings.
+				writer.println(km.getName() + "=" + km.saveString());
 			}
 		}
 

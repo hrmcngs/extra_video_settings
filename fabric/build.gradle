@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.8.13'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
 }
 
 version = '1.1'
@@ -25,19 +25,27 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    // Sodium (required by Iris)
-    modCompileOnly "maven.modrinth:sodium:mc1.20.4-0.5.8"
-    modRuntimeOnly "maven.modrinth:sodium:mc1.20.4-0.5.8"
+    // Sodium (required by the mixin) — 0.5.x が SodiumOptionsGUI API を提供
+    modCompileOnly "maven.modrinth:sodium:${project.sodium_version}"
+    modRuntimeOnly "maven.modrinth:sodium:${project.sodium_version}"
 
-    // Iris Shaders
-    modCompileOnly "maven.modrinth:iris:1.7.5+1.20.4"
-    modRuntimeOnly "maven.modrinth:iris:1.7.5+1.20.4"
+    // Iris Shaders (optional, recommended)
+    modCompileOnly "maven.modrinth:iris:${project.iris_version}"
+    modRuntimeOnly "maven.modrinth:iris:${project.iris_version}"
 }
 
 processResources {
     inputs.property "version", project.version
     filesMatching("fabric.mod.json") {
         expand "version": project.version
+    }
+}
+
+// Share Java sources and resources from ../common/ (loader-agnostic code)
+sourceSets {
+    main {
+        java.srcDir file('../common/src/main/java')
+        resources.srcDir file('../common/src/main/resources')
     }
 }
 

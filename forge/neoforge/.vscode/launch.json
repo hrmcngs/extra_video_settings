@@ -1,0 +1,231 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Extra_video_settings-neoforge - Client",
+      "presentation": {
+        "group": "NG - extra_video_settings-neoforge",
+        "order": 0
+      },
+      "projectName": "extra_video_settings-neoforge",
+      "mainClass": "cpw.mods.bootstraplauncher.BootstrapLauncher",
+      "args": [
+        "--launchTarget",
+        "forgeclientuserdev",
+        "--version",
+        "20.2.93",
+        "--assetIndex",
+        "asset-index",
+        "--assetsDir",
+        "/Users/hiromichi/.gradle/caches/minecraft/assets",
+        "--gameDir",
+        ".",
+        "--fml.neoForgeVersion",
+        "20.2.93",
+        "--fml.fmlVersion",
+        "1.0.16",
+        "--fml.mcVersion",
+        "1.20.2",
+        "--fml.neoFormVersion",
+        "20231019.002635"
+      ],
+      "vmArgs": [
+        "-p",
+        "/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/securejarhandler/2.1.24/21e16217c30688d99200796f5d828ad5b671141c/securejarhandler-2.1.24.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.5/19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0/asm-commons-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.5/64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe/asm-util-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarFileSystems/0.4.0/ef7e5716525bbe50c784a362f9393457a33e6daf/JarJarFileSystems-0.4.0.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.5/dc6ea1875f4d64fbc85e1691c95b96a3d8569c90/asm-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/bootstraplauncher/1.1.2/c546e00443d8432cda6baa1c860346980742628/bootstraplauncher-1.1.2.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.5/fd33c8b6373abaa675be407082fdfda35021254a/asm-tree-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.5/490bacc77de7cbc0be1a30bb3471072d705be4a4/asm-analysis-9.5.jar",
+        "--add-modules",
+        "ALL-MODULE-PATH",
+        "--add-opens",
+        "java.base/java.util.jar\u003dcpw.mods.securejarhandler",
+        "--add-opens",
+        "java.base/java.lang.invoke\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "java.base/sun.security.util\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "jdk.naming.dns/com.sun.jndi.dns\u003djava.naming",
+        "-XstartOnFirstThread",
+        "-Dforge.logging.markers\u003dREGISTRIES",
+        "-Dforge.logging.console.level\u003ddebug",
+        "-Dneoforge.enableGameTest\u003dtrue",
+        "-DlegacyClassPath.file\u003d/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/.gradle/configuration/neoForm/neoFormJoined1.20.2-20231019.002635/steps/writeMinecraftClasspathClient/classpath.txt",
+        "-DignoreList\u003dsecurejarhandler-2.1.24.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-1.1.2.jar,JarJarFileSystems-0.4.0.jar,events-1.0.16.jar,core-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar,mixinextras-neoforge-0.3.1.jar,client-extra,neoforge-",
+        "-Dfml.gameLayerLibraries\u003devents-1.0.16.jar",
+        "-DmergeModules\u003djna-5.10.0.jar,jna-platform-5.10.0.jar",
+        "-Djava.net.preferIPv6Addresses\u003dsystem",
+        "-Dfml.pluginLayerLibraries\u003dcore-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {
+        "MOD_CLASSES": "extra_video_settings-neoforge%%/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/bin/main",
+        "MCP_MAPPINGS": "UNUSED_DEPRECATED"
+      },
+      "shortenCommandLine": "argfile"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Extra_video_settings-neoforge - Data",
+      "presentation": {
+        "group": "NG - extra_video_settings-neoforge",
+        "order": 1
+      },
+      "projectName": "extra_video_settings-neoforge",
+      "mainClass": "cpw.mods.bootstraplauncher.BootstrapLauncher",
+      "args": [
+        "--launchTarget",
+        "forgedatauserdev",
+        "--assetIndex",
+        "asset-index",
+        "--assetsDir",
+        "/Users/hiromichi/.gradle/caches/minecraft/assets",
+        "--gameDir",
+        ".",
+        "--fml.neoForgeVersion",
+        "20.2.93",
+        "--fml.fmlVersion",
+        "1.0.16",
+        "--fml.mcVersion",
+        "1.20.2",
+        "--fml.neoFormVersion",
+        "20231019.002635"
+      ],
+      "vmArgs": [
+        "-p",
+        "/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/securejarhandler/2.1.24/21e16217c30688d99200796f5d828ad5b671141c/securejarhandler-2.1.24.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.5/19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0/asm-commons-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.5/64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe/asm-util-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarFileSystems/0.4.0/ef7e5716525bbe50c784a362f9393457a33e6daf/JarJarFileSystems-0.4.0.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.5/dc6ea1875f4d64fbc85e1691c95b96a3d8569c90/asm-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/bootstraplauncher/1.1.2/c546e00443d8432cda6baa1c860346980742628/bootstraplauncher-1.1.2.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.5/fd33c8b6373abaa675be407082fdfda35021254a/asm-tree-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.5/490bacc77de7cbc0be1a30bb3471072d705be4a4/asm-analysis-9.5.jar",
+        "--add-modules",
+        "ALL-MODULE-PATH",
+        "--add-opens",
+        "java.base/java.util.jar\u003dcpw.mods.securejarhandler",
+        "--add-opens",
+        "java.base/java.lang.invoke\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "java.base/sun.security.util\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "jdk.naming.dns/com.sun.jndi.dns\u003djava.naming",
+        "-Dforge.logging.markers\u003dREGISTRIES",
+        "-Dforge.logging.console.level\u003ddebug",
+        "-DlegacyClassPath.file\u003d/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/.gradle/configuration/neoForm/neoFormJoined1.20.2-20231019.002635/steps/writeMinecraftClasspathData/classpath.txt",
+        "-DignoreList\u003dsecurejarhandler-2.1.24.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-1.1.2.jar,JarJarFileSystems-0.4.0.jar,events-1.0.16.jar,core-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar,mixinextras-neoforge-0.3.1.jar,client-extra,neoforge-",
+        "-Dfml.gameLayerLibraries\u003devents-1.0.16.jar",
+        "-DmergeModules\u003djna-5.10.0.jar,jna-platform-5.10.0.jar",
+        "-Djava.net.preferIPv6Addresses\u003dsystem",
+        "-Dfml.pluginLayerLibraries\u003dcore-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {
+        "MOD_CLASSES": "extra_video_settings-neoforge%%/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/bin/main",
+        "MCP_MAPPINGS": "UNUSED_DEPRECATED"
+      },
+      "shortenCommandLine": "argfile"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Extra_video_settings-neoforge - GameTestServer",
+      "presentation": {
+        "group": "NG - extra_video_settings-neoforge",
+        "order": 2
+      },
+      "projectName": "extra_video_settings-neoforge",
+      "mainClass": "cpw.mods.bootstraplauncher.BootstrapLauncher",
+      "args": [
+        "--launchTarget",
+        "forgeserveruserdev",
+        "--gameDir",
+        ".",
+        "--fml.neoForgeVersion",
+        "20.2.93",
+        "--fml.fmlVersion",
+        "1.0.16",
+        "--fml.mcVersion",
+        "1.20.2",
+        "--fml.neoFormVersion",
+        "20231019.002635"
+      ],
+      "vmArgs": [
+        "-p",
+        "/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/securejarhandler/2.1.24/21e16217c30688d99200796f5d828ad5b671141c/securejarhandler-2.1.24.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.5/19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0/asm-commons-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.5/64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe/asm-util-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarFileSystems/0.4.0/ef7e5716525bbe50c784a362f9393457a33e6daf/JarJarFileSystems-0.4.0.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.5/dc6ea1875f4d64fbc85e1691c95b96a3d8569c90/asm-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/bootstraplauncher/1.1.2/c546e00443d8432cda6baa1c860346980742628/bootstraplauncher-1.1.2.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.5/fd33c8b6373abaa675be407082fdfda35021254a/asm-tree-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.5/490bacc77de7cbc0be1a30bb3471072d705be4a4/asm-analysis-9.5.jar",
+        "--add-modules",
+        "ALL-MODULE-PATH",
+        "--add-opens",
+        "java.base/java.util.jar\u003dcpw.mods.securejarhandler",
+        "--add-opens",
+        "java.base/java.lang.invoke\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "java.base/sun.security.util\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "jdk.naming.dns/com.sun.jndi.dns\u003djava.naming",
+        "-Dforge.logging.markers\u003dREGISTRIES",
+        "-Dforge.logging.console.level\u003ddebug",
+        "-Dneoforge.enableGameTest\u003dtrue",
+        "-Dneoforge.gameTestServer\u003dtrue",
+        "-DlegacyClassPath.file\u003d/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/.gradle/configuration/neoForm/neoFormJoined1.20.2-20231019.002635/steps/writeMinecraftClasspathGameTestServer/classpath.txt",
+        "-DignoreList\u003dsecurejarhandler-2.1.24.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-1.1.2.jar,JarJarFileSystems-0.4.0.jar,events-1.0.16.jar,core-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar,mixinextras-neoforge-0.3.1.jar,client-extra,neoforge-",
+        "-Dfml.gameLayerLibraries\u003devents-1.0.16.jar",
+        "-DmergeModules\u003djna-5.10.0.jar,jna-platform-5.10.0.jar",
+        "-Djava.net.preferIPv6Addresses\u003dsystem",
+        "-Dfml.pluginLayerLibraries\u003dcore-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar"
+      ],
+      "cwd": "${workspaceFolder}/runs/gameTestServer",
+      "env": {
+        "MOD_CLASSES": "extra_video_settings-neoforge%%/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/bin/main",
+        "MCP_MAPPINGS": "UNUSED_DEPRECATED"
+      },
+      "shortenCommandLine": "argfile"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Extra_video_settings-neoforge - Server",
+      "presentation": {
+        "group": "NG - extra_video_settings-neoforge",
+        "order": 3
+      },
+      "projectName": "extra_video_settings-neoforge",
+      "mainClass": "cpw.mods.bootstraplauncher.BootstrapLauncher",
+      "args": [
+        "--launchTarget",
+        "forgeserveruserdev",
+        "--gameDir",
+        ".",
+        "--fml.neoForgeVersion",
+        "20.2.93",
+        "--fml.fmlVersion",
+        "1.0.16",
+        "--fml.mcVersion",
+        "1.20.2",
+        "--fml.neoFormVersion",
+        "20231019.002635"
+      ],
+      "vmArgs": [
+        "-p",
+        "/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/securejarhandler/2.1.24/21e16217c30688d99200796f5d828ad5b671141c/securejarhandler-2.1.24.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/9.5/19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0/asm-commons-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/9.5/64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe/asm-util-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarFileSystems/0.4.0/ef7e5716525bbe50c784a362f9393457a33e6daf/JarJarFileSystems-0.4.0.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/9.5/dc6ea1875f4d64fbc85e1691c95b96a3d8569c90/asm-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/cpw.mods/bootstraplauncher/1.1.2/c546e00443d8432cda6baa1c860346980742628/bootstraplauncher-1.1.2.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/9.5/fd33c8b6373abaa675be407082fdfda35021254a/asm-tree-9.5.jar:/Users/hiromichi/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/9.5/490bacc77de7cbc0be1a30bb3471072d705be4a4/asm-analysis-9.5.jar",
+        "--add-modules",
+        "ALL-MODULE-PATH",
+        "--add-opens",
+        "java.base/java.util.jar\u003dcpw.mods.securejarhandler",
+        "--add-opens",
+        "java.base/java.lang.invoke\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "java.base/sun.security.util\u003dcpw.mods.securejarhandler",
+        "--add-exports",
+        "jdk.naming.dns/com.sun.jndi.dns\u003djava.naming",
+        "-Dforge.logging.markers\u003dREGISTRIES",
+        "-Dforge.logging.console.level\u003ddebug",
+        "-DlegacyClassPath.file\u003d/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/.gradle/configuration/neoForm/neoFormJoined1.20.2-20231019.002635/steps/writeMinecraftClasspathServer/classpath.txt",
+        "-DignoreList\u003dsecurejarhandler-2.1.24.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-1.1.2.jar,JarJarFileSystems-0.4.0.jar,events-1.0.16.jar,core-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar,mixinextras-neoforge-0.3.1.jar,client-extra,neoforge-",
+        "-Dfml.gameLayerLibraries\u003devents-1.0.16.jar",
+        "-DmergeModules\u003djna-5.10.0.jar,jna-platform-5.10.0.jar",
+        "-Djava.net.preferIPv6Addresses\u003dsystem",
+        "-Dfml.pluginLayerLibraries\u003dcore-1.0.16.jar,language-java-1.0.16.jar,language-lowcode-1.0.16.jar,language-minecraft-1.0.16.jar"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {
+        "MOD_CLASSES": "extra_video_settings-neoforge%%/Users/hiromichi/Documents/github/mods/extra_video_settings/forge/neoforge/bin/main",
+        "MCP_MAPPINGS": "UNUSED_DEPRECATED"
+      },
+      "shortenCommandLine": "argfile"
+    }
+  ]
+}

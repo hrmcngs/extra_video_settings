@@ -1,0 +1,67 @@
+plugins {
+    id 'eclipse'
+    id 'net.neoforged.gradle.userdev' version '7.0.50'
+}
+
+version = '1.1'
+group = 'extravideoset'
+
+base {
+    archivesName = 'extra_video_settings-neoforge'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
+    client {
+        workingDirectory project.file('run')
+    }
+    server {
+        workingDirectory project.file('run')
+    }
+    data {
+        workingDirectory project.file('run')
+    }
+}
+
+repositories {
+    maven {
+        name = "Curse Maven"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
+dependencies {
+    // NeoForge for MC 1.20.2 (NeoForge does not support 1.20.1; 20.2.x is the
+    // first NeoForge line, last 1.20.2 release is 20.2.93)
+    implementation 'net.neoforged:neoforge:20.2.93'
+
+    // Embeddium for 1.20.2: no published CurseForge artifact matches the
+    // Forge 1.20.1 build we use; the EmbeddiumIntegration class is therefore
+    // excluded from the NeoForge source set until a 1.20.2 artifact is wired up.
+}
+
+// Share Java sources and resources from ../../common/ (loader-agnostic code)
+sourceSets {
+    main {
+        java.srcDir file('../../common/src/main/java')
+        resources.srcDir file('../../common/src/main/resources')
+        java {
+            // Embeddium integration depends on a 1.20.1-only Embeddium API,
+            // which we don't have a NeoForge 1.20.2 binary for. Skip it.
+            exclude 'extravideoset/client/EmbeddiumIntegration.java'
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

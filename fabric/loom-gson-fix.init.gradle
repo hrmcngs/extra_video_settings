@@ -1,0 +1,15 @@
+// Injected to work around fabric-loom 1.7.x bundling Gson 2.9.1, which
+// fails to set final fields via reflection on JDK 17.0.5+
+// (`Can not set final java.util.Map field ManifestVersion.latest`).
+// Forces Gson 2.11.0 across the plugin/script classpath where loom resolves it.
+allprojects {
+    configurations.configureEach {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.google.code.gson' &&
+                details.requested.name == 'gson') {
+                details.useVersion('2.11.0')
+                details.because('Gson 2.9.1 cannot set final fields on JDK 17.0.5+')
+            }
+        }
+    }
+}

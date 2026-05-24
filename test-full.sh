@@ -1,5 +1,8 @@
 #!/bin/bash
+# Build the Forge variant and copy the JAR into the real .minecraft/mods/.
 set -e
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
 
 MINECRAFT_MODS="$APPDATA/.minecraft/mods"
 # WSL
@@ -7,30 +10,23 @@ if [ -d "/mnt/c" ]; then
     MINECRAFT_MODS="/mnt/c/Users/hrmcn/AppData/Roaming/.minecraft/mods"
 fi
 
-echo "=== Full Test: extra_video_settings ==="
+echo "=== Full Test: extra_video_settings (Forge) ==="
 echo "Embeddium + Oculus (実際の Minecraft 環境)"
 echo ""
 
-# ビルド
-echo "Building JAR..."
-if [ -d "/mnt/c" ]; then
-    cmd.exe /c "set JAVA_HOME=C:\Program Files\Java\jdk-17&& gradlew.bat build" 2>&1
-else
-    export JAVA_HOME="${JAVA_HOME:-C:/Program Files/Java/jdk-17}"
-    ./gradlew build
-fi
+echo "Building Forge JAR..."
+"$DIR/buildfo.sh"
 
-JAR="build/libs/extra_video_settings-1.0.jar"
+JAR="$DIR/forge/forge/build/libs/extra_video_settings-1.1.jar"
 if [ ! -f "$JAR" ]; then
-    echo "Build failed: JAR not found"
+    echo "Build failed: JAR not found at $JAR"
     exit 1
 fi
 
-# .minecraft/mods/ にコピー
 cp "$JAR" "$MINECRAFT_MODS/"
 echo ""
 echo "=== Installed ==="
-echo "JAR copied to: $MINECRAFT_MODS/extra_video_settings-1.0.jar"
+echo "JAR copied to: $MINECRAFT_MODS/$(basename "$JAR")"
 echo ""
 echo "Minecraft ランチャーからプレイしてください。"
 echo "Embeddium と Oculus が既にインストール済みです。"

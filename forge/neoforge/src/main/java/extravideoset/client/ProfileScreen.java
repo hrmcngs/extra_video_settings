@@ -5,14 +5,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
-import net.fabricmc.fabric.api.client.screen.v1.Screens;
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -30,50 +29,53 @@ public class ProfileScreen extends Screen {
 		this.parent = parent;
 	}
 
-	// ========== OptionsScreen button hook (Fabric) ==========
+	// ========== OptionsScreen button hook ==========
 
 	public static void registerScreenEvent() {
-		ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
-			if (!(screen instanceof OptionsScreen)) return;
+		NeoForge.EVENT_BUS.addListener(ProfileScreen::onOptionsScreenInit);
+	}
 
-			// Find the Done button by matching its text
-			String doneText = CommonComponents.GUI_DONE.getString();
-			List<AbstractWidget> buttons = Screens.getButtons(screen);
-			AbstractWidget doneWidget = null;
+	private static void onOptionsScreenInit(ScreenEvent.Init.Post event) {
+		if (!(event.getScreen() instanceof OptionsScreen)) return;
 
-			for (AbstractWidget widget : buttons) {
-				if (widget instanceof Button btn && btn.getMessage().getString().equals(doneText)) {
-					doneWidget = widget;
-					break;
-				}
+		Screen screen = event.getScreen();
+		int screenWidth = screen.width;
+
+		// Find the Done button by matching its text
+		String doneText = CommonComponents.GUI_DONE.getString();
+		Button doneButton = null;
+		for (var listener : event.getListenersList()) {
+			if (listener instanceof Button btn && btn.getMessage().getString().equals(doneText)) {
+				doneButton = btn;
+				break;
 			}
+		}
 
-			if (doneWidget != null) {
-				int y = doneWidget.getY();
-				final Button originalDone = (Button) doneWidget;
-				buttons.remove(doneWidget);
+		if (doneButton != null) {
+			final Button originalDone = doneButton;
+			int y = originalDone.getY();
+			event.removeListener(originalDone);
 
-				// Narrower Done button (left half)
-				buttons.add(Button.builder(CommonComponents.GUI_DONE,
-						b -> originalDone.onPress())
-						.bounds(scaledWidth / 2 - 200, y, 196, 20)
-						.build());
+			// Narrower Done button (left half)
+			event.addListener(Button.builder(CommonComponents.GUI_DONE,
+					b -> originalDone.onPress())
+					.bounds(screenWidth / 2 - 200, y, 196, 20)
+					.build());
 
-				// Profiles button (right half)
-				buttons.add(Button.builder(
-						Component.translatable("extra_video_settings.profiles"),
-						b -> client.setScreen(new ProfileScreen(screen)))
-						.bounds(scaledWidth / 2 + 4, y, 196, 20)
-						.build());
-			} else {
-				// Fallback: add button in top-right corner
-				buttons.add(Button.builder(
-						Component.translatable("extra_video_settings.profiles"),
-						b -> client.setScreen(new ProfileScreen(screen)))
-						.bounds(scaledWidth - 104, 4, 100, 20)
-						.build());
-			}
-		});
+			// Profiles button (right half)
+			event.addListener(Button.builder(
+					Component.translatable("extra_video_settings.profiles"),
+					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
+					.bounds(screenWidth / 2 + 4, y, 196, 20)
+					.build());
+		} else {
+			// Fallback: add button in top-right corner
+			event.addListener(Button.builder(
+					Component.translatable("extra_video_settings.profiles"),
+					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
+					.bounds(screenWidth - 104, 4, 100, 20)
+					.build());
+		}
 	}
 
 	// ========== Screen implementation ==========
@@ -188,7 +190,8 @@ public class ProfileScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-		this.renderBackground(graphics);
+		// MC 1.20.2+ added (mouseX, mouseY, partialTick) to renderBackground
+		this.renderBackground(graphics, mouseX, mouseY, partialTick);
 
 		// Title
 		graphics.drawCenteredString(this.font, this.title, this.width / 2, 15, 0xFFFFFF);

@@ -1,12 +1,17 @@
 # Extra Video Settings
 
-Embeddiumがバニラのビデオ設定画面を置き換えた際に消えてしまう設定項目を復元するForge modです。
+Embeddium/Sodium がバニラのビデオ設定画面を置き換えた際に消えてしまう設定項目を復元する Minecraft mod です。
 さらに、キー設定やビデオ設定をプロファイルとしてテキストファイルに保存・読み込みできます（MOD設定含む）。
+
+Forge / NeoForge / Fabric の 3 ローダーに対応（いずれも 1.20.1）。
 
 ## 前提mod
 
-- Minecraft Forge 1.20.1
-- [Embeddium](https://www.curseforge.com/minecraft/mc-mods/embeddium) 0.1.0+（任意）
+| ローダー | 必須 | 推奨/任意 |
+|----------|------|-----------|
+| Forge 1.20.1 | Forge 47+ | [Embeddium](https://www.curseforge.com/minecraft/mc-mods/embeddium) 0.1+ |
+| NeoForge 1.20.1 | NeoForge 47.1+ | Embeddium 0.1+ |
+| Fabric 1.20.1 | Fabric Loader 0.14+, Fabric API, [Sodium](https://modrinth.com/mod/sodium) 0.5+ | [Iris](https://modrinth.com/mod/iris) |
 
 ## 機能
 
@@ -56,37 +61,31 @@ Embeddiumがバニラのビデオ設定画面を置き換えた際に消えて�
 
 ## ビルド・テスト
 
-### JAR ビルド
+詳細は [BUILD.md](BUILD.md) を参照。
 
 ```bash
-./build.sh
+./buildfo.sh    # Forge    → forge/forge/build/libs/
+./buildne.sh    # NeoForge → forge/neoforge/build/libs/
+./buildfa.sh    # Fabric   → fabric/build/libs/
+
+./build.sh      # 3つまとめてビルド
 ```
 
-出力: `build/libs/extra_video_settings-1.1.jar`
-
-### テストプレイ（Embeddium + Oculus 入り）
+### テストプレイ
 
 ```bash
-./test.sh
+./run_clientfo.sh   # Forge dev client
+./run_clientne.sh   # NeoForge dev client
+./run_clientfa.sh   # Fabric dev client
 ```
-
-Embeddium 0.3.31 と Oculus 1.8.0 が自動で読み込まれた状態で Minecraft が起動する。
-
-### 手動で実行する場合
-
-```bash
-# ビルドのみ
-JAVA_HOME="C:/Program Files/Java/jdk-17" ./gradlew build
-
-# テストプレイ
-JAVA_HOME="C:/Program Files/Java/jdk-17" ./gradlew runClient
-```
-
-> WSL の場合は `JAVA_HOME="/mnt/c/Program Files/Java/jdk-17"` を使用する。
 
 ## インストール
 
-`extra_video_settings-1.1.jar` を `.minecraft/mods/` フォルダに入れる。
+各ローダーに合った JAR を `.minecraft/mods/` フォルダに入れる：
+
+- Forge: `forge/forge/build/libs/extra_video_settings-1.1.jar`
+- NeoForge: `forge/neoforge/build/libs/extra_video_settings-neoforge-1.1.jar`
+- Fabric: `fabric/build/libs/extra_video_settings-fabric-1.20.1-1.1.jar`
 
 ## ライセンス
 

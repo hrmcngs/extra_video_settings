@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-cd "$(dirname "$0")/fabric"
+cd "$(dirname "$0")/forge/neoforge"
 if [ -d "/mnt/c" ]; then
     cmd.exe /c "set JAVA_HOME=C:\\Program Files\\Java\\jdk-17&& gradlew.bat runClient"
 else
