@@ -60,7 +60,62 @@ cd ~/Documents/github/mods/extra_video_settings   # macOS の例
 
 Windows なら `.bat` 版（`buildfo.bat` / `run_clientne.bat` ...）を使う。
 
+### オフラインビルド
+
+依存が既にローカルキャッシュ (`~/.gradle/caches/`) にあれば、ネット無しで通る。
+スクリプトは `--offline` を含む任意の引数を gradle に pass-through する：
+
+```bash
+./build.sh --offline           # 3 ローダー全部オフラインビルド
+./buildfo.sh --offline          # Forge だけオフライン
+./buildne.sh --offline
+./buildfa.sh --offline
+./run_clientfo.sh --offline     # dev client もオフラインで起動
+
+# 環境変数版（便利）
+EVS_OFFLINE=1 ./build.sh        # 全部オフライン
+```
+
+`.bat` 版も同様：
+
+```cmd
+buildfo.bat --offline
+build.sh は無いので、各 .bat を個別に呼ぶ
+```
+
+**初回ビルドは必ずオンラインで実行**（依存ダウンロード）。一度ビルドが
+通ったマシンなら、その後はずっとオフラインで OK。
+
+### dev クライアント (`run_client*.sh`) のオフライン対応
+
+| ローダー | 初回オンライン要求 | キャッシュ後 `--offline` |
+|----------|-------------------|------------------------|
+| Forge    | `downloadMCMeta` がキャッシュ無視で fetch を試みる<br>→ オンライン必要 | キャッシュが揃っていれば動く（ForgeGradle の挙動次第） |
+| NeoForge | MC 1.20.2 の asset index を毎回 verify、未キャッシュなら fetch<br>→ オンライン必要 | キャッシュ後は `--offline` OK |
+| **Fabric** | **fabric-loom はキャッシュをきちんと見る → 最初からオフラインで動く** | ✓ 完全 offline OK |
+
+要するに、**dev クライアントの初回起動は通常のオンライン環境**で。ビルド
+だけならどれも完全 offline で OK（成果物 JAR は Production 用なので、
+`.minecraft/mods/` に入れた実機 Minecraft で動かすのが本来の使い方）。
+
+**Forge は cert チェック無効フラグを常時付与**：`-Dnet.minecraftforge.gradle.check.certs=false`
+を `buildfo.sh` / `run_clientfo.sh` がデフォルトで渡す。これは Cisco Umbrella
+等の DNS フィルタプロキシ環境でも通すための保険（正常な環境ではただの
+no-op：通常の HTTPS 検証はそのまま走る）。
+
 ## 出力 JAR
+
+`buildXX.sh` / `buildXX.bat` は最後に **`dist/` に JAR をコピー** する。
+3 ローダーまとめて `dist/` 直下で受け取れるので、配布が楽。
+
+```
+dist/
+├─ extra_video_settings-1.1.jar                     # Forge
+├─ extra_video_settings-neoforge-1.1.jar            # NeoForge
+└─ extra_video_settings-fabric-1.20.1-1.1.jar       # Fabric
+```
+
+ビルドツリー内のオリジナル：
 
 | ローダー | パス |
 |----------|------|
@@ -69,6 +124,8 @@ Windows なら `.bat` 版（`buildfo.bat` / `run_clientne.bat` ...）を使う�
 | Fabric   | `fabric/build/libs/extra_video_settings-fabric-1.20.1-1.1.jar` |
 
 各 JAR には `common/` のリソース・クラスが自動的に同梱される。
+
+`dist/` は `.gitignore` 済み（ビルド成果物なのでリポジトリには入れない）。
 
 ## インストール
 
@@ -92,14 +149,17 @@ cd fabric && ./gradlew build            # Fabric
 
 ## ビルド速度
 
-`gradle.properties` で daemon / parallel / caching / config-on-demand を全部有効。
+`gradle.properties` で daemon / parallel / caching を有効。
 
 ```
 org.gradle.daemon=true
 org.gradle.parallel=true
 org.gradle.caching=true
-org.gradle.configureondemand=true
 ```
+
+> **Forge / NeoForge は `org.gradle.configureondemand=true` を入れない**：
+> ForgeGradle 6 / NeoGradle 7 が runs ブロック (`runClient` タスク登録) を
+> 設定し損ねて "Task 'runClient' not found" になる。Fabric は OK。
 
 | 種別 | 所要時間（実測 / Mac M-series） |
 |------|---------------------------------|
@@ -128,7 +188,27 @@ rm -rf ~/.gradle/caches/neoformruntime ~/.gradle/undefined-build
 
 ---
 
+## 動作確認状況
+
+実機 (Mac M2 / macOS / Homebrew openjdk@17) での dev クライアント起動結果：
+
+| ローダー | 起動 | 確認ログ |
+|----------|------|----------|
+| **Fabric** ✓ | OK | `[ExtraVideoSettings] Settings commands registered` → `[ExtraVideoSettings] Extra Video Settings loaded` → `Setting user: Player888` → `OpenGL Renderer: Apple M2` → ResourceManager に `extra_video_settings` ロード確認 |
+| Forge | 未確認 | DNS フィルタ環境下では `downloadMCMeta` task の online 検証で停止。フィルタ無しの回線で初回起動済ませた後は `--offline` で動くはず |
+| NeoForge | 未確認 | 同じく初回は MC 1.20.2 asset index DL が必要。フィルタ無しの回線が要 |
+
 ## トラブルシューティング
+
+### Fabric: 起動時に `Incompatible mods found! Sodium 0.5.3 / Iris 1.7.0+mc1.20.1 needs Sodium 0.5.8`
+
+Iris 1.7.x は Sodium 0.5.8 を hard-require するが、Sodium 0.5.8 は MC 1.20.1
+用にはリリースされていない（0.5.3 が 1.20.1 系の最後）。**修正済み**：
+`fabric/build.gradle` で Iris を `modCompileOnly` だけにして、dev runtime
+からは外している。エンドユーザは自前で組み合わせる：
+
+- **1.20.1 + Iris を使いたい**: Iris 1.6.x + Sodium 0.5.3
+- **1.20.4 + Iris を使いたい**: Iris 1.7.x + Sodium 0.5.8（リポジトリ全体を 1.20.4 に上げる必要あり）
 
 ### Fabric: `Unexpected IllegalAccessException occurred (Gson 2.9.1)`
 
@@ -174,17 +254,48 @@ vineflower のヒープ不足。`forge/neoforge/gradle.properties` の
 4. `EmbeddiumIntegration.java` を `common/src/main/java/.../client/` に移して
    全ローダー共通にしてもよい（API が一致する前提で）
 
+### Forge: `runClient` で `:downloadMCMeta FAILED ... SSLHandshakeException`
+
+ForgeGradle 6 の `downloadMCMeta` task は `--offline` を無視して
+`launchermeta.mojang.com` を fetch しようとする。DNS フィルタ環境では
+ここで詰む。対応：
+
+1. **フィルタの無い回線で 1 回 `./run_clientfo.sh` を成功させる**
+   → `forge/forge/build/downloadMCMeta/version.json` が生成される
+2. その後は `./run_clientfo.sh --offline` で OK（ファイルが存在すれば
+   task は UP-TO-DATE になる）
+
+緊急回避：
+
+```bash
+# version.json を ForgeGradle のグローバルキャッシュからプロジェクトの
+# build/downloadMCMeta/ へ手動コピー（初回のみ、フィルタ無し回線で
+# 一度でもビルド or runClient を完走しておく必要あり）
+mkdir -p forge/forge/build/downloadMCMeta
+cp ~/.gradle/caches/forge_gradle/minecraft_repo/versions/1.20.1/version.json \
+   forge/forge/build/downloadMCMeta/
+```
+
+### Forge: `Task 'runClient' not found in root project`
+
+`forge/forge/gradle.properties` に `org.gradle.configureondemand=true` が
+入ってないか確認。入っていると ForgeGradle 6 の runs ブロックが評価されず
+runClient が登録されない。同じことが NeoGradle 7 でも起こる。
+
 ### Forge: `Failed to validate certificate for host 'https://maven.minecraftforge.net/'`
 
 ネットワーク（Cisco Umbrella, DNS フィルタなど）が maven.minecraftforge.net を
-ブロックしている。回避：
+ブロックしている。スクリプト経由なら自動回避済み（`buildfo.sh` /
+`run_clientfo.sh` がデフォルトで `-Dnet.minecraftforge.gradle.check.certs=false`
+を渡す）。直接 `./gradlew` を叩く場合は以下：
 
 ```bash
-./gradlew build -Dnet.minecraftforge.gradle.check.certs=false --offline
+cd forge/forge
+./gradlew build --offline -Dnet.minecraftforge.gradle.check.certs=false
 ```
 
 依存がローカル `~/.gradle/caches/forge_gradle/` にキャッシュされていれば
-`--offline` で通る。初回ビルドはフィルタの掛かってない回線でやる必要あり。
+`--offline` で通る。**初回ビルドはフィルタの掛かってない回線でやる必要あり**。
 
 ### Name mask: Forge で tab list が伏せ字にならない
 

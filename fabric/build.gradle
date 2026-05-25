@@ -29,9 +29,11 @@ dependencies {
     modCompileOnly "maven.modrinth:sodium:${project.sodium_version}"
     modRuntimeOnly "maven.modrinth:sodium:${project.sodium_version}"
 
-    // Iris Shaders (optional, recommended)
+    // Iris Shaders (optional, recommended) — compile-only.
+    // NOT added as runtime dep here because Iris 1.7.x for 1.20.1 hard-pins
+    // Sodium 0.5.8 which doesn't exist for 1.20.1 (only 0.5.3 is the latest
+    // Sodium for 1.20.1). End users pick a matching pair.
     modCompileOnly "maven.modrinth:iris:${project.iris_version}"
-    modRuntimeOnly "maven.modrinth:iris:${project.iris_version}"
 }
 
 processResources {

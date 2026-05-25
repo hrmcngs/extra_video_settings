@@ -1,24 +1,34 @@
 #!/bin/bash
 # Build all three loader variants (Forge, NeoForge, Fabric).
-# Use the per-variant scripts directly if you only want one.
+# Forwards any extra args to each loader's Gradle invocation, so
+# `./build.sh --offline` runs all three in offline mode.
+# Each per-variant script copies its JAR into dist/; the final listing
+# is printed at the end.
 set -e
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
+# Convenience: EVS_OFFLINE=1 ./build.sh -> implies --offline
+if [ "${EVS_OFFLINE:-0}" = "1" ]; then
+    set -- --offline "$@"
+fi
+
 echo "=== Building Forge ==="
-"$DIR/buildfo.sh"
+"$DIR/buildfo.sh" "$@"
 
 echo ""
 echo "=== Building NeoForge ==="
-"$DIR/buildne.sh"
+"$DIR/buildne.sh" "$@"
 
 echo ""
 echo "=== Building Fabric ==="
-"$DIR/buildfa.sh"
+"$DIR/buildfa.sh" "$@"
 
 echo ""
 echo "=== All builds complete ==="
-echo "JARs:"
-ls -1 "$DIR/forge/forge/build/libs/"*.jar 2>/dev/null || echo "  (forge build/libs missing)"
-ls -1 "$DIR/forge/neoforge/build/libs/"*.jar 2>/dev/null || echo "  (neoforge build/libs missing)"
-ls -1 "$DIR/fabric/build/libs/"*.jar 2>/dev/null || echo "  (fabric build/libs missing)"
+echo "dist/:"
+if [ -d "$DIR/dist" ]; then
+    ls -1lh "$DIR/dist/" | tail -n +2
+else
+    echo "  (dist/ missing)"
+fi

@@ -36,6 +36,9 @@ out/
 run/
 runs/
 
+# Built JAR collection
+dist/
+
 # IDE
 .idea/
 *.iml
