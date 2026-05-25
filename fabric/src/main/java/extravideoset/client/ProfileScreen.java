@@ -37,12 +37,26 @@ public class ProfileScreen extends Screen {
 			if (!(screen instanceof OptionsScreen)) return;
 
 			// Hook mouse-wheel: shift every widget so the user can pan to
-			// off-screen widgets (Done pushed below the bottom edge by our
-			// Profile button injection in tiny windows).
+			// off-screen widgets. Bounded so it can't be scrolled past the
+			// topmost or bottommost widget.
 			net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents.afterMouseScroll(screen)
 					.register((scr, mx, my, hScroll, vScroll) -> {
 						if (vScroll == 0) return;
-						int shift = (int) (vScroll * 12);
+						int desired = (int) (-vScroll * 12);
+						int minY = Integer.MAX_VALUE;
+						int maxBottom = Integer.MIN_VALUE;
+						for (net.minecraft.client.gui.components.events.GuiEventListener l : scr.children()) {
+							if (l instanceof AbstractWidget aw) {
+								minY = Math.min(minY, aw.getY());
+								maxBottom = Math.max(maxBottom, aw.getY() + aw.getHeight());
+							}
+						}
+						if (minY == Integer.MAX_VALUE) return;
+						int top = 4, bottom = scr.height - 4;
+						int minShift = Math.min(0, bottom - maxBottom);
+						int maxShift = Math.max(0, top - minY);
+						int shift = Math.max(minShift, Math.min(maxShift, desired));
+						if (shift == 0) return;
 						for (net.minecraft.client.gui.components.events.GuiEventListener l : scr.children()) {
 							if (l instanceof AbstractWidget aw) {
 								aw.setY(aw.getY() + shift);

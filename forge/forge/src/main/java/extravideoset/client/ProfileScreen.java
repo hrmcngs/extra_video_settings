@@ -37,18 +37,37 @@ public class ProfileScreen extends Screen {
 	}
 
 	/**
-	 * Lets the user scroll the OptionsScreen if our injected Profile button
-	 * (or its consequent shift of Done) pushes Done off the visible area.
-	 * We simply shift every widget by the scroll delta — no actual scroll
-	 * container, just a "drag the whole layout" gesture via mouse wheel.
+	 * Scrollable OptionsScreen: when our Profile injection pushes Done off
+	 * the visible area, the user can pan the whole layout with the mouse
+	 * wheel. Bounded so it can't be scrolled past the topmost or bottommost
+	 * widget — wheel does nothing when there's no off-screen content.
 	 */
 	private static void onMouseScrolled(ScreenEvent.MouseScrolled.Post event) {
 		if (!(event.getScreen() instanceof OptionsScreen)) return;
 		double delta = event.getScrollDelta();
 		if (delta == 0) return;
-		int shift = (int) (delta * 12); // 12px per wheel notch
-		for (var listener : event.getScreen().children()) {
-			if (listener instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
+		// Wheel up (delta > 0) → content moves up → widget Y decreases.
+		int desired = (int) (-delta * 12);
+
+		var screen = event.getScreen();
+		int minY = Integer.MAX_VALUE;
+		int maxBottom = Integer.MIN_VALUE;
+		for (var l : screen.children()) {
+			if (l instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
+				minY = Math.min(minY, aw.getY());
+				maxBottom = Math.max(maxBottom, aw.getY() + aw.getHeight());
+			}
+		}
+		if (minY == Integer.MAX_VALUE) return;
+
+		int top = 4, bottom = screen.height - 4;
+		int minShift = Math.min(0, bottom - maxBottom);   // ≤ 0; can scroll content up
+		int maxShift = Math.max(0, top - minY);            // ≥ 0; can scroll content down
+		int shift = Math.max(minShift, Math.min(maxShift, desired));
+		if (shift == 0) return;
+
+		for (var l : screen.children()) {
+			if (l instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
 				aw.setY(aw.getY() + shift);
 			}
 		}

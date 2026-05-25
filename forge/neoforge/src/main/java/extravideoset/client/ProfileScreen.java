@@ -36,15 +36,33 @@ public class ProfileScreen extends Screen {
 		NeoForge.EVENT_BUS.addListener(ProfileScreen::onMouseScrolled);
 	}
 
-	/** Mouse-wheel scrolling on OptionsScreen — shifts every widget by the
-	 *  scroll delta so the user can pan to off-screen widgets like Done. */
+	/** Bounded mouse-wheel scrolling on OptionsScreen — never scrolls past
+	 *  the topmost or bottommost widget. */
 	private static void onMouseScrolled(ScreenEvent.MouseScrolled.Post event) {
 		if (!(event.getScreen() instanceof OptionsScreen)) return;
 		double delta = event.getScrollDeltaY();
 		if (delta == 0) return;
-		int shift = (int) (delta * 12);
-		for (var listener : event.getScreen().children()) {
-			if (listener instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
+		int desired = (int) (-delta * 12);
+
+		var screen = event.getScreen();
+		int minY = Integer.MAX_VALUE;
+		int maxBottom = Integer.MIN_VALUE;
+		for (var l : screen.children()) {
+			if (l instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
+				minY = Math.min(minY, aw.getY());
+				maxBottom = Math.max(maxBottom, aw.getY() + aw.getHeight());
+			}
+		}
+		if (minY == Integer.MAX_VALUE) return;
+
+		int top = 4, bottom = screen.height - 4;
+		int minShift = Math.min(0, bottom - maxBottom);
+		int maxShift = Math.max(0, top - minY);
+		int shift = Math.max(minShift, Math.min(maxShift, desired));
+		if (shift == 0) return;
+
+		for (var l : screen.children()) {
+			if (l instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
 				aw.setY(aw.getY() + shift);
 			}
 		}

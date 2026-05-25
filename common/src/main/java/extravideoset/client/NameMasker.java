@@ -65,6 +65,9 @@ public final class NameMasker {
 		if (othersMode == NameMaskMode.OFF && selfMode == NameMaskMode.OFF) return text;
 
 		Set<String> names = candidateNames();
+		extravideoset.ExtraVideoSettingsMod.LOGGER.info(
+				"[EVS] maskText: text='{}' candidates={} self='{}' othersMode={} selfMode={}",
+				text.getString(), names, localPlayerName(), othersMode, selfMode);
 		if (names.isEmpty()) return text;
 
 		String raw = text.getString();
