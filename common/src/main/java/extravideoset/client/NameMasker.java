@@ -76,7 +76,11 @@ public final class NameMasker {
 			if (name == null || name.isEmpty()) continue;
 			NameMaskMode mode = modeFor(name);
 			if (mode == NameMaskMode.OFF) continue;
-			Pattern p = Pattern.compile("\\b" + Pattern.quote(name) + "\\b");
+			// Explicit ASCII-class lookarounds instead of \b. On some JVMs
+			// \b doesn't fire between ASCII word chars and certain non-ASCII
+			// non-word chars (e.g. Japanese hiragana), so "Devは殺された"
+			// wouldn't match \bDev\b. Lookarounds avoid that quirk.
+			Pattern p = Pattern.compile("(?<![A-Za-z0-9_])" + Pattern.quote(name) + "(?![A-Za-z0-9_])");
 			Component masked = buildMasked(name, mode);
 			replaced = p.matcher(replaced).replaceAll(plainOf(masked, mode));
 		}
@@ -108,8 +112,15 @@ public final class NameMasker {
 
 	private static String localPlayerName() {
 		Minecraft mc = Minecraft.getInstance();
-		if (mc.player == null) return null;
-		return mc.player.getGameProfile().getName();
+		if (mc.player != null) return mc.player.getGameProfile().getName();
+		// Fallback: the launcher user name. Set at startup, never cleared,
+		// so death/respawn transitions (where mc.player briefly goes null)
+		// still resolve a name for masking death messages.
+		if (mc.getUser() != null) {
+			String n = mc.getUser().getName();
+			if (n != null && !n.isEmpty()) return n;
+		}
+		return null;
 	}
 
 	/**
