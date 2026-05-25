@@ -3,7 +3,9 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
 }
 
-version = '1.1'
+// Version is taken from -PevsVersion (set by buildfo.sh via scripts/next-version.sh).
+// Falls back to a hardcoded value when invoked directly with no project property.
+version = project.findProperty('evsVersion') ?: '1.1'
 group = 'extravideoset'
 archivesBaseName = 'extra_video_settings'
 
@@ -30,6 +32,10 @@ minecraft {
             // Mixin refmap remapping: SRG -> official (dev環境でEmbeddiumのMixinを動作させる)
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${project.buildDir}/createSrgToMcp/output.srg"
+
+            // macOS Apple Silicon の Metal-OpenGL ブリッジが Forge の EARLYDISPLAY
+            // で SIGSEGV を踏むので早期スプラッシュを無効化（dev runClient のみ）。
+            property 'fml.earlyprogresswindow', 'false'
 
             mods {
                 extra_video_settings {
@@ -62,6 +68,27 @@ sourceSets {
     main {
         java.srcDir file('../../common/src/main/java')
         resources.srcDir file('../../common/src/main/resources')
+    }
+}
+
+processResources {
+    // Substitute ${version} in mods.toml so the in-game mod-list version
+    // matches whatever scripts/next-version.sh produced.
+    inputs.property 'version', project.version
+    filesMatching('META-INF/mods.toml') {
+        expand 'version': project.version
+    }
+}
+
+// Belt-and-suspenders: also register the mixin config via MANIFEST.MF.
+// Forge 1.20.1 picks up [[mixins]] from mods.toml, but in dev runs the
+// config sometimes isn't loaded (no debug log line). Adding MixinConfigs
+// to the jar manifest ensures the mixin subsystem also sees it.
+jar {
+    manifest {
+        attributes(
+            'MixinConfigs': 'extra_video_settings.mixins.json'
+        )
     }
 }
 

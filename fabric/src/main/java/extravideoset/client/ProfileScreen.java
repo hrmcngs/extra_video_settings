@@ -36,41 +36,52 @@ public class ProfileScreen extends Screen {
 		ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
 			if (!(screen instanceof OptionsScreen)) return;
 
-			// Find the Done button by matching its text
+			int cx = scaledWidth / 2;
 			String doneText = CommonComponents.GUI_DONE.getString();
 			List<AbstractWidget> buttons = Screens.getButtons(screen);
 			AbstractWidget doneWidget = null;
-
-			for (AbstractWidget widget : buttons) {
-				if (widget instanceof Button btn && btn.getMessage().getString().equals(doneText)) {
-					doneWidget = widget;
+			for (AbstractWidget w : buttons) {
+				if (w instanceof Button btn && btn.getMessage().getString().equals(doneText)) {
+					doneWidget = w;
 					break;
 				}
 			}
 
-			if (doneWidget != null) {
-				int y = doneWidget.getY();
-				final Button originalDone = (Button) doneWidget;
-				buttons.remove(doneWidget);
-
-				// Narrower Done button (left half)
-				buttons.add(Button.builder(CommonComponents.GUI_DONE,
-						b -> originalDone.onPress())
-						.bounds(scaledWidth / 2 - 200, y, 196, 20)
-						.build());
-
-				// Profiles button (right half)
+			if (doneWidget == null) {
 				buttons.add(Button.builder(
 						Component.translatable("extra_video_settings.profiles"),
 						b -> client.setScreen(new ProfileScreen(screen)))
-						.bounds(scaledWidth / 2 + 4, y, 196, 20)
+						.bounds(cx - 100, scaledHeight - 48, 200, 20)
+						.build());
+				return;
+			}
+
+			int gridBottom = 0;
+			int doneY = doneWidget.getY();
+			for (AbstractWidget w : buttons) {
+				if (w != doneWidget && w.getY() < doneY) {
+					gridBottom = Math.max(gridBottom, w.getY() + w.getHeight());
+				}
+			}
+
+			final Button originalDone = (Button) doneWidget;
+			int gap = doneY - gridBottom;
+
+			if (gap >= 28) {
+				buttons.add(Button.builder(
+						Component.translatable("extra_video_settings.profiles"),
+						b -> client.setScreen(new ProfileScreen(screen)))
+						.bounds(cx - 100, gridBottom + 4, 200, 20)
 						.build());
 			} else {
-				// Fallback: add button in top-right corner
+				buttons.remove(doneWidget);
+				buttons.add(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
+						.bounds(cx - 200, doneY, 196, 20)
+						.build());
 				buttons.add(Button.builder(
 						Component.translatable("extra_video_settings.profiles"),
 						b -> client.setScreen(new ProfileScreen(screen)))
-						.bounds(scaledWidth - 104, 4, 100, 20)
+						.bounds(cx + 4, doneY, 196, 20)
 						.build());
 			}
 		});

@@ -1,5 +1,8 @@
 modLoader="javafml"
-loaderVersion="[20,)"
+# loaderVersion is the JAVAFML LANGUAGE PROVIDER version, NOT the NeoForge
+# version. NeoForge 1.20.2 (20.2.x) ships javafml language 1.0.x.
+# (The NeoForge runtime version itself is constrained below in dependencies.)
+loaderVersion="[1,)"
 license="MIT"
 
 [[mixins]]
@@ -8,7 +11,7 @@ config="extra_video_settings.mixins.json"
 [[mods]]
 modId="extra_video_settings"
 logoFile="icon.png"
-version="1.1"
+version="${version}"
 displayName="Extra Video Settings"
 description='''Restores vanilla video settings (FOV Effects, Glint Speed, etc.) that Embeddium/Sodium remove. Save and load key bindings & video settings profiles.'''
 

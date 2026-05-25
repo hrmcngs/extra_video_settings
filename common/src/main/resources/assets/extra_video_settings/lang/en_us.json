@@ -34,11 +34,15 @@
   "extra_video_settings.command.profile_not_found": "Profile not found: %1$s",
   "extra_video_settings.command.error": "Error: %1$s",
 
-  "extra_video_settings.sodium_page": "Extra Settings",
+  "extra_video_settings.sodium_page": "EVS",
 
   "extra_video_settings.name_mask": "Hide Other Players' Names",
   "extra_video_settings.tooltip.name_mask": "How to display other players' names (nameplate, chat, tab list).",
   "extra_video_settings.name_mask.off": "Off",
   "extra_video_settings.name_mask.blackout": "Blackout (███)",
-  "extra_video_settings.name_mask.obfuscated": "Obfuscated"
+  "extra_video_settings.name_mask.obfuscated": "Obfuscated",
+  "extra_video_settings.name_mask.self": "Hide Own Name",
+  "extra_video_settings.tooltip.name_mask.self": "How to display your own name (nameplate, chat, tab list, death screen).",
+  "extra_video_settings.name_mask.others": "Hide Other Players' Names",
+  "extra_video_settings.tooltip.name_mask.others": "How to display other players' names (nameplate, chat, tab list)."
 }

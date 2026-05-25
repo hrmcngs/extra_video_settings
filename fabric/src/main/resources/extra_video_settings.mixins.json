@@ -5,7 +5,8 @@
   "client": [
     "SodiumOptionsGUIMixin",
     "PlayerInfoMixin",
-    "EntityRendererNameTagMixin"
+    "EntityRendererNameTagMixin",
+    "DeathScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

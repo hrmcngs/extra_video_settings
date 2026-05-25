@@ -13,6 +13,7 @@ import extravideoset.client.NameMaskConfig;
 import extravideoset.client.NameMaskEvents;
 import extravideoset.client.ProfileScreen;
 import extravideoset.client.SettingsCommand;
+import extravideoset.client.VanillaVideoScreenHook;
 
 @Mod("extra_video_settings")
 public class ExtraVideoSettingsMod {
@@ -30,6 +31,7 @@ public class ExtraVideoSettingsMod {
 		ProfileScreen.registerScreenEvent();
 		NameMaskEvents.init();
 		NameMaskConfig.load();
+		VanillaVideoScreenHook.register();
 
 		LOGGER.info("Extra Video Settings loaded");
 	}

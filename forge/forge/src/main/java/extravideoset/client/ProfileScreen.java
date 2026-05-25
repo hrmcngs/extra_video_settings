@@ -39,9 +39,8 @@ public class ProfileScreen extends Screen {
 		if (!(event.getScreen() instanceof OptionsScreen)) return;
 
 		Screen screen = event.getScreen();
-		int screenWidth = screen.width;
+		int cx = screen.width / 2;
 
-		// Find the Done button by matching its text
 		String doneText = CommonComponents.GUI_DONE.getString();
 		Button doneButton = null;
 		for (var listener : event.getListenersList()) {
@@ -51,29 +50,49 @@ public class ProfileScreen extends Screen {
 			}
 		}
 
-		if (doneButton != null) {
-			final Button originalDone = doneButton;
-			int y = originalDone.getY();
-			event.removeListener(originalDone);
-
-			// Narrower Done button (left half)
-			event.addListener(Button.builder(CommonComponents.GUI_DONE,
-					b -> originalDone.onPress())
-					.bounds(screenWidth / 2 - 200, y, 196, 20)
-					.build());
-
-			// Profiles button (right half)
+		if (doneButton == null) {
 			event.addListener(Button.builder(
 					Component.translatable("extra_video_settings.profiles"),
 					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
-					.bounds(screenWidth / 2 + 4, y, 196, 20)
+					.bounds(cx - 100, screen.height - 48, 200, 20)
+					.build());
+			return;
+		}
+
+		// Find the bottom of the option grid (lowest non-Done widget). The
+		// gap between gridBottom and Done determines where Profile fits.
+		int gridBottom = 0;
+		for (var listener : event.getListenersList()) {
+			if (listener instanceof net.minecraft.client.gui.components.AbstractWidget aw
+					&& aw != doneButton
+					&& aw.getY() < doneButton.getY()) {
+				gridBottom = Math.max(gridBottom, aw.getY() + aw.getHeight());
+			}
+		}
+
+		final Button originalDone = doneButton;
+		int doneY = originalDone.getY();
+		int gap = doneY - gridBottom;
+
+		if (gap >= 28) {
+			// Plenty of room between grid and Done — place Profile in there,
+			// 4px below the last grid widget. Done unchanged.
+			event.addListener(Button.builder(
+					Component.translatable("extra_video_settings.profiles"),
+					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
+					.bounds(cx - 100, gridBottom + 4, 200, 20)
 					.build());
 		} else {
-			// Fallback: add button in top-right corner
+			// Grid sits right next to Done (small windows, dense layouts) —
+			// replace Done with two narrower buttons side by side.
+			event.removeListener(originalDone);
+			event.addListener(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
+					.bounds(cx - 200, doneY, 196, 20)
+					.build());
 			event.addListener(Button.builder(
 					Component.translatable("extra_video_settings.profiles"),
 					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
-					.bounds(screenWidth - 104, 4, 100, 20)
+					.bounds(cx + 4, doneY, 196, 20)
 					.build());
 		}
 	}

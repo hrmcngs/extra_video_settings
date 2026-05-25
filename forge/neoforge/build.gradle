@@ -3,7 +3,8 @@ plugins {
     id 'net.neoforged.gradle.userdev' version '7.0.50'
 }
 
-version = '1.1'
+// Version is taken from -PevsVersion (set by buildne.sh via scripts/next-version.sh).
+version = project.findProperty('evsVersion') ?: '1.1'
 group = 'extravideoset'
 
 base {
@@ -20,6 +21,10 @@ runs {
     }
     client {
         workingDirectory project.file('run')
+        // macOS Apple Silicon (M1/M2) + NeoForge 1.20.2 の EARLYDISPLAY が
+        // Apple Metal-OpenGL bridge で SIGSEGV を踏むので早期スプラッシュを切る。
+        // 本番ビルドには影響しない (dev runClient のみ)。
+        systemProperty 'fml.earlyprogresswindow', 'false'
     }
     server {
         workingDirectory project.file('run')
@@ -63,6 +68,15 @@ sourceSets {
             // which we don't have a NeoForge 1.20.2 binary for. Skip it.
             exclude 'extravideoset/client/EmbeddiumIntegration.java'
         }
+    }
+}
+
+processResources {
+    // Substitute ${version} in mods.toml so the in-game mod-list version
+    // matches whatever scripts/next-version.sh produced.
+    inputs.property 'version', project.version
+    filesMatching('META-INF/mods.toml') {
+        expand 'version': project.version
     }
 }
 

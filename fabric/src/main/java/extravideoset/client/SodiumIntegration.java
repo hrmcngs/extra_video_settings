@@ -72,11 +72,24 @@ public class SodiumIntegration {
 						.setImpact(OptionImpact.LOW)
 						.build())
 				.add(OptionImpl.createBuilder(NameMaskMode.class, VANILLA_STORAGE)
-						.setName(Component.translatable("extra_video_settings.name_mask"))
-						.setTooltip(Component.translatable("extra_video_settings.tooltip.name_mask"))
+						.setName(Component.translatable("extra_video_settings.name_mask.others"))
+						.setTooltip(Component.translatable("extra_video_settings.tooltip.name_mask.others"))
 						.setBinding(
 								(opts, val) -> NameMaskConfig.setMode(val),
 								(opts) -> NameMaskConfig.getMode())
+						.setControl(opt -> new CyclingControl<>(opt, NameMaskMode.class, new Component[] {
+								Component.translatable("extra_video_settings.name_mask.off"),
+								Component.translatable("extra_video_settings.name_mask.blackout"),
+								Component.translatable("extra_video_settings.name_mask.obfuscated")
+						}))
+						.setImpact(OptionImpact.LOW)
+						.build())
+				.add(OptionImpl.createBuilder(NameMaskMode.class, VANILLA_STORAGE)
+						.setName(Component.translatable("extra_video_settings.name_mask.self"))
+						.setTooltip(Component.translatable("extra_video_settings.tooltip.name_mask.self"))
+						.setBinding(
+								(opts, val) -> NameMaskConfig.setSelfMode(val),
+								(opts) -> NameMaskConfig.getSelfMode())
 						.setControl(opt -> new CyclingControl<>(opt, NameMaskMode.class, new Component[] {
 								Component.translatable("extra_video_settings.name_mask.off"),
 								Component.translatable("extra_video_settings.name_mask.blackout"),

@@ -5,7 +5,8 @@
   "minVersion": "0.8.5",
   "refmap": "",
   "client": [
-    "PlayerInfoMixin"
+    "PlayerInfoMixin",
+    "DeathScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

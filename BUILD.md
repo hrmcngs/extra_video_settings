@@ -103,6 +103,47 @@ build.sh は無いので、各 .bat を個別に呼ぶ
 等の DNS フィルタプロキシ環境でも通すための保険（正常な環境ではただの
 no-op：通常の HTTPS 検証はそのまま走る）。
 
+## バージョン自動採番
+
+ビルド実行時に **CurseForge の最新公開版を取得して +1 した版** を JAR /
+`mods.toml` / `fabric.mod.json` 全部に反映する。
+
+```bash
+./build.sh           # CurseForge 最新 = 1.1  →  dist/ に 1.2 出力
+./build.sh           # CurseForge にまだ 1.2 が無ければ 何度叩いても 1.2
+                     # （CurseForge 公開後、次は自動で 1.3 になる）
+```
+
+仕組み：
+1. `scripts/next-version.sh`（Windows は `scripts/next-version.cmd`）が
+   `https://api.cfwidget.com/minecraft/mc-mods/extra-video-settings` を叩いて
+   `extra_video_settings-X.Y.jar` 形式のファイル名から最大版を抽出
+2. 最後のドット区切り要素を +1（`1.1` → `1.2`、`1.0.5` → `1.0.6`）
+3. ビルドスクリプトが `-PevsVersion=<次版>` で gradle 起動
+4. 各 `build.gradle` の `version = project.findProperty('evsVersion') ?: '1.1'`
+   が拾い、`processResources` が `mods.toml` の `${version}` を展開
+
+### 手動上書き
+
+| 環境変数 | 効果 |
+|----------|------|
+| `EVS_VERSION=2.3` | CurseForge 参照せず、`2.3` を直接使う |
+| `EVS_BUMP_FROM=1.5` | CurseForge 参照せず、`1.5` を bump して `1.6` を使う |
+| `EVS_NO_BUMP=1` | CurseForge 最新版を **bump せずそのまま** 使う（テスト再ビルド用） |
+
+```bash
+EVS_VERSION=2.0 ./build.sh           # 強制的に 2.0
+EVS_NO_BUMP=1 ./build.sh             # CurseForge 最新版そのまま（1.1）
+```
+
+### オフライン時の挙動
+
+cfwidget が到達不能なら：
+1. `scripts/.last-known-cf-version`（前回成功時に保存したキャッシュ）を読む
+2. 無ければハードコードの fallback (`1.1`) を使う
+
+ビルド自体は失敗しないので、ネット無し環境でもそのまま動く。
+
 ## 出力 JAR
 
 `buildXX.sh` / `buildXX.bat` は最後に **`dist/` に JAR をコピー** する。
@@ -195,8 +236,8 @@ rm -rf ~/.gradle/caches/neoformruntime ~/.gradle/undefined-build
 | ローダー | 起動 | 確認ログ |
 |----------|------|----------|
 | **Fabric** ✓ | OK | `[ExtraVideoSettings] Settings commands registered` → `[ExtraVideoSettings] Extra Video Settings loaded` → `Setting user: Player888` → `OpenGL Renderer: Apple M2` → ResourceManager に `extra_video_settings` ロード確認 |
-| Forge | 未確認 | DNS フィルタ環境下では `downloadMCMeta` task の online 検証で停止。フィルタ無しの回線で初回起動済ませた後は `--offline` で動くはず |
-| NeoForge | 未確認 | 同じく初回は MC 1.20.2 asset index DL が必要。フィルタ無しの回線が要 |
+| **NeoForge** ✓ | OK | ModLauncher → EARLYDISPLAY → SoundEngine 起動まで確認（loaderVersion バグ修正後）|
+| Forge | フィルタ無し環境で要再検証 | `downloadMCMeta` がオンライン fetch を強要するため、最初の 1 回はフィルタ無し回線が必要 |
 
 ## トラブルシューティング
 
@@ -222,6 +263,53 @@ fabric-loom の MinecraftMetadataProvider を壊す。
 ```groovy
 id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 ```
+
+### NeoForge / Forge runClient: macOS で `SIGSEGV in AppleMetalOpenGLRenderer`
+
+NeoForge / Forge の EARLYDISPLAY（起動時スプラッシュ画面）が、macOS Apple
+Silicon の Metal→OpenGL ブリッジで JVM ごとクラッシュさせる既知の問題。
+ログ例：
+
+```
+# SIGSEGV (0xb) at pc=..., pid=42164, tid=68883
+# Problematic frame:
+# C  [AppleMetalOpenGLRenderer+0x14e0c]  GLRResourceList::addResource(GLRResource*)+0x44
+```
+
+**対応済み**：両ローダーの `build.gradle` の runs 設定に
+`fml.earlyprogresswindow=false` を入れて早期スプラッシュを切ってある。
+本番ビルドには影響しない（dev `runClient` だけ）。
+
+それでも踏む場合は、別 GL バージョンを試す（macOS の OpenGL 4.6 サポートが
+怪しいので 4.1 固定にする等）か、JVM 引数に `-XstartOnFirstThread` を強制
+追加：
+
+```groovy
+// build.gradle の runs.client ブロック内
+jvmArguments.add('-XstartOnFirstThread')
+```
+
+### NeoForge: `Mod File main needs language provider javafml:20 or above to load §7We have found 1.0`
+
+`forge/neoforge/src/main/resources/META-INF/mods.toml` の `loaderVersion` を
+NeoForge のバージョン（20.x）と勘違いしている。これは実際には **javafml
+言語プロバイダ** のバージョン要求であって NeoForge 本体のバージョンではない。
+
+NeoForge 1.20.2 (20.2.x) が同梱する javafml language は `1.0.x` 系。
+したがって：
+
+```toml
+modLoader="javafml"
+loaderVersion="[1,)"      # OK — javafml language ≥ 1.0
+# loaderVersion="[20,)"   # NG — そんな javafml は存在しない
+
+[[dependencies.extra_video_settings]]
+    modId="neoforge"
+    versionRange="[20.2,)"  # NeoForge ランタイム本体はこっちで縛る
+```
+
+NeoForge 1.20.4+ では `loaderVersion` の数字も変わる（MC version - 16 とか）
+ので、別バージョンに移植するときは要確認。
 
 ### NeoForge: `neoFormApplyForgesAccessTransformer FAILED ... output.jar doesn't exist`
 

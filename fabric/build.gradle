@@ -2,7 +2,8 @@ plugins {
     id 'fabric-loom' version '1.7-SNAPSHOT'
 }
 
-version = '1.1'
+// Version is taken from -PevsVersion (set by buildfa.sh via scripts/next-version.sh).
+version = project.findProperty('evsVersion') ?: '1.1'
 group = 'extravideoset'
 
 base {
