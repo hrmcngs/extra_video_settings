@@ -8,6 +8,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
+import extravideoset.client.DeathScreenHook;
 import extravideoset.client.EmbeddiumIntegration;
 import extravideoset.client.NameMaskConfig;
 import extravideoset.client.NameMaskEvents;
@@ -32,6 +33,7 @@ public class ExtraVideoSettingsMod {
 		NameMaskEvents.init();
 		NameMaskConfig.load();
 		VanillaVideoScreenHook.register();
+		DeathScreenHook.register();
 
 		LOGGER.info("Extra Video Settings loaded");
 	}

@@ -36,6 +36,20 @@ public class ProfileScreen extends Screen {
 		ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
 			if (!(screen instanceof OptionsScreen)) return;
 
+			// Hook mouse-wheel: shift every widget so the user can pan to
+			// off-screen widgets (Done pushed below the bottom edge by our
+			// Profile button injection in tiny windows).
+			net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents.afterMouseScroll(screen)
+					.register((scr, mx, my, hScroll, vScroll) -> {
+						if (vScroll == 0) return;
+						int shift = (int) (vScroll * 12);
+						for (net.minecraft.client.gui.components.events.GuiEventListener l : scr.children()) {
+							if (l instanceof AbstractWidget aw) {
+								aw.setY(aw.getY() + shift);
+							}
+						}
+					});
+
 			int cx = scaledWidth / 2;
 			String doneText = CommonComponents.GUI_DONE.getString();
 			List<AbstractWidget> buttons = Screens.getButtons(screen);
@@ -64,26 +78,21 @@ public class ProfileScreen extends Screen {
 				}
 			}
 
+			// Always place Profile directly below the grid, push Done down.
+			// Tiny windows can use mouse-wheel scroll (see above) or ESC.
 			final Button originalDone = (Button) doneWidget;
-			int gap = doneY - gridBottom;
+			int profileY = gridBottom + 4;
+			int newDoneY = profileY + 24;
 
-			if (gap >= 28) {
-				buttons.add(Button.builder(
-						Component.translatable("extra_video_settings.profiles"),
-						b -> client.setScreen(new ProfileScreen(screen)))
-						.bounds(cx - 100, gridBottom + 4, 200, 20)
-						.build());
-			} else {
-				buttons.remove(doneWidget);
-				buttons.add(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
-						.bounds(cx - 200, doneY, 196, 20)
-						.build());
-				buttons.add(Button.builder(
-						Component.translatable("extra_video_settings.profiles"),
-						b -> client.setScreen(new ProfileScreen(screen)))
-						.bounds(cx + 4, doneY, 196, 20)
-						.build());
-			}
+			buttons.remove(doneWidget);
+			buttons.add(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
+					.bounds(cx - 100, newDoneY, 200, 20)
+					.build());
+			buttons.add(Button.builder(
+					Component.translatable("extra_video_settings.profiles"),
+					b -> client.setScreen(new ProfileScreen(screen)))
+					.bounds(cx - 100, profileY, 200, 20)
+					.build());
 		});
 	}
 

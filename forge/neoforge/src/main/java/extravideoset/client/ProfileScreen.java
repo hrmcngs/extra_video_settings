@@ -33,6 +33,21 @@ public class ProfileScreen extends Screen {
 
 	public static void registerScreenEvent() {
 		NeoForge.EVENT_BUS.addListener(ProfileScreen::onOptionsScreenInit);
+		NeoForge.EVENT_BUS.addListener(ProfileScreen::onMouseScrolled);
+	}
+
+	/** Mouse-wheel scrolling on OptionsScreen — shifts every widget by the
+	 *  scroll delta so the user can pan to off-screen widgets like Done. */
+	private static void onMouseScrolled(ScreenEvent.MouseScrolled.Post event) {
+		if (!(event.getScreen() instanceof OptionsScreen)) return;
+		double delta = event.getScrollDeltaY();
+		if (delta == 0) return;
+		int shift = (int) (delta * 12);
+		for (var listener : event.getScreen().children()) {
+			if (listener instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
+				aw.setY(aw.getY() + shift);
+			}
+		}
 	}
 
 	private static void onOptionsScreenInit(ScreenEvent.Init.Post event) {
@@ -68,27 +83,22 @@ public class ProfileScreen extends Screen {
 			}
 		}
 
+		// Always place Profile directly below the grid, push Done down
+		// to follow. If Done is off-screen on a tiny window, the user can
+		// scroll (see onMouseScrolled) or close the screen with ESC.
 		final Button originalDone = doneButton;
-		int doneY = originalDone.getY();
-		int gap = doneY - gridBottom;
+		int profileY = gridBottom + 4;
+		int newDoneY = profileY + 24;
 
-		if (gap >= 28) {
-			event.addListener(Button.builder(
-					Component.translatable("extra_video_settings.profiles"),
-					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
-					.bounds(cx - 100, gridBottom + 4, 200, 20)
-					.build());
-		} else {
-			event.removeListener(originalDone);
-			event.addListener(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
-					.bounds(cx - 200, doneY, 196, 20)
-					.build());
-			event.addListener(Button.builder(
-					Component.translatable("extra_video_settings.profiles"),
-					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
-					.bounds(cx + 4, doneY, 196, 20)
-					.build());
-		}
+		event.removeListener(originalDone);
+		event.addListener(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
+				.bounds(cx - 100, newDoneY, 200, 20)
+				.build());
+		event.addListener(Button.builder(
+				Component.translatable("extra_video_settings.profiles"),
+				b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
+				.bounds(cx - 100, profileY, 200, 20)
+				.build());
 	}
 
 	// ========== Screen implementation ==========

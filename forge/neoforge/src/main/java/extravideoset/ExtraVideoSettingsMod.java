@@ -7,6 +7,7 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 
+import extravideoset.client.DeathScreenHook;
 import extravideoset.client.NameMaskConfig;
 import extravideoset.client.NameMaskEvents;
 import extravideoset.client.ProfileScreen;
@@ -30,6 +31,7 @@ public class ExtraVideoSettingsMod {
 		NameMaskEvents.init();
 		NameMaskConfig.load();
 		VanillaVideoScreenHook.register();
+		DeathScreenHook.register();
 
 		LOGGER.info("Extra Video Settings loaded (NeoForge)");
 	}

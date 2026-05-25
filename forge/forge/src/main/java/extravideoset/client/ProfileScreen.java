@@ -33,6 +33,25 @@ public class ProfileScreen extends Screen {
 
 	public static void registerScreenEvent() {
 		MinecraftForge.EVENT_BUS.addListener(ProfileScreen::onOptionsScreenInit);
+		MinecraftForge.EVENT_BUS.addListener(ProfileScreen::onMouseScrolled);
+	}
+
+	/**
+	 * Lets the user scroll the OptionsScreen if our injected Profile button
+	 * (or its consequent shift of Done) pushes Done off the visible area.
+	 * We simply shift every widget by the scroll delta — no actual scroll
+	 * container, just a "drag the whole layout" gesture via mouse wheel.
+	 */
+	private static void onMouseScrolled(ScreenEvent.MouseScrolled.Post event) {
+		if (!(event.getScreen() instanceof OptionsScreen)) return;
+		double delta = event.getScrollDelta();
+		if (delta == 0) return;
+		int shift = (int) (delta * 12); // 12px per wheel notch
+		for (var listener : event.getScreen().children()) {
+			if (listener instanceof net.minecraft.client.gui.components.AbstractWidget aw) {
+				aw.setY(aw.getY() + shift);
+			}
+		}
 	}
 
 	private static void onOptionsScreenInit(ScreenEvent.Init.Post event) {
@@ -59,8 +78,7 @@ public class ProfileScreen extends Screen {
 			return;
 		}
 
-		// Find the bottom of the option grid (lowest non-Done widget). The
-		// gap between gridBottom and Done determines where Profile fits.
+		// Find the bottom of the option grid (lowest non-Done widget).
 		int gridBottom = 0;
 		for (var listener : event.getListenersList()) {
 			if (listener instanceof net.minecraft.client.gui.components.AbstractWidget aw
@@ -70,31 +88,22 @@ public class ProfileScreen extends Screen {
 			}
 		}
 
+		// Always place Profile directly below the grid, and push Done down
+		// to follow. In a small window Done may run off the bottom edge —
+		// in that case the user can still close the screen with ESC.
 		final Button originalDone = doneButton;
-		int doneY = originalDone.getY();
-		int gap = doneY - gridBottom;
+		int profileY = gridBottom + 4;
+		int newDoneY = profileY + 24;
 
-		if (gap >= 28) {
-			// Plenty of room between grid and Done — place Profile in there,
-			// 4px below the last grid widget. Done unchanged.
-			event.addListener(Button.builder(
-					Component.translatable("extra_video_settings.profiles"),
-					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
-					.bounds(cx - 100, gridBottom + 4, 200, 20)
-					.build());
-		} else {
-			// Grid sits right next to Done (small windows, dense layouts) —
-			// replace Done with two narrower buttons side by side.
-			event.removeListener(originalDone);
-			event.addListener(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
-					.bounds(cx - 200, doneY, 196, 20)
-					.build());
-			event.addListener(Button.builder(
-					Component.translatable("extra_video_settings.profiles"),
-					b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
-					.bounds(cx + 4, doneY, 196, 20)
-					.build());
-		}
+		event.removeListener(originalDone);
+		event.addListener(Button.builder(CommonComponents.GUI_DONE, b -> originalDone.onPress())
+				.bounds(cx - 100, newDoneY, 200, 20)
+				.build());
+		event.addListener(Button.builder(
+				Component.translatable("extra_video_settings.profiles"),
+				b -> Minecraft.getInstance().setScreen(new ProfileScreen(screen)))
+				.bounds(cx - 100, profileY, 200, 20)
+				.build());
 	}
 
 	// ========== Screen implementation ==========
