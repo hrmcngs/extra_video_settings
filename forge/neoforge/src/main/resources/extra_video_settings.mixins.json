@@ -2,10 +2,10 @@
   "required": true,
   "package": "extravideoset.mixin",
   "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8.5",
+  "refmap": "",
   "client": [
-    "SodiumOptionsGUIMixin",
-    "PlayerInfoMixin",
-    "EntityRendererNameTagMixin"
+    "PlayerInfoMixin"
   ],
   "injectors": {
     "defaultRequire": 1

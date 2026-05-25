@@ -174,6 +174,36 @@ vineflower のヒープ不足。`forge/neoforge/gradle.properties` の
 4. `EmbeddiumIntegration.java` を `common/src/main/java/.../client/` に移して
    全ローダー共通にしてもよい（API が一致する前提で）
 
+### Forge: `Failed to validate certificate for host 'https://maven.minecraftforge.net/'`
+
+ネットワーク（Cisco Umbrella, DNS フィルタなど）が maven.minecraftforge.net を
+ブロックしている。回避：
+
+```bash
+./gradlew build -Dnet.minecraftforge.gradle.check.certs=false --offline
+```
+
+依存がローカル `~/.gradle/caches/forge_gradle/` にキャッシュされていれば
+`--offline` で通る。初回ビルドはフィルタの掛かってない回線でやる必要あり。
+
+### Name mask: Forge で tab list が伏せ字にならない
+
+Forge 1.20.1 はランタイムが SRG 名前空間なので、PlayerInfoMixin の `@Inject`
+ターゲット `getTabListDisplayName` を SRG 名に変換する refmap が必要。
+通常は `org.spongepowered.mixin` Gradle プラグインが annotation processor を
+仕込んで生成するが、本リポジトリでは依存簡素化のため AP を外している。
+
+tab list を実機で動かしたい場合は `forge/forge/build.gradle` の `plugins {}`
+に `id 'org.spongepowered.mixin' version '0.7.+'` を戻し、`SpongePowered`
+リポジトリを `settings.gradle` の `pluginManagement.repositories` に追加：
+
+```groovy
+maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+```
+
+ネームプレートとチャットは event ベース (`RenderNameTagEvent` /
+`ClientChatReceivedEvent`) なので refmap 無しでも動く。
+
 ### Forge: `JAVA_HOME` が見つからない
 
 スクリプトは macOS で `/usr/libexec/java_home -v 17` を使って自動検出。
@@ -203,6 +233,50 @@ Linux なら `JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./buildfo.sh`。
 | ビルドプラグイン | net.minecraftforge.gradle 6 | net.neoforged.gradle.userdev 7.0.50 | fabric-loom 1.7-SNAPSHOT |
 | pack_format | 15 | 18 | 15 |
 | Sodium / Embeddium | Embeddium 0.3.31 (任意) | （未配線 — 上記参照） | Sodium 0.5.3+mc1.20.1 (必須) |
+
+## 他プレイヤー名マスク機能
+
+新規追加した「他プレイヤーの名前を伏せる」設定について。
+
+### 適用箇所
+
+| 箇所 | Forge 実装 | NeoForge 実装 | Fabric 実装 |
+|------|-----------|---------------|-------------|
+| ネームプレート（頭上） | `RenderNameTagEvent` | `RenderNameTagEvent` | `EntityRendererNameTagMixin` |
+| チャットメッセージ | `ClientChatReceivedEvent` | `ClientChatReceivedEvent` | `ClientReceiveMessageEvents.MODIFY_GAME` (Fabric API) |
+| Tab リスト | `PlayerInfoMixin` | `PlayerInfoMixin` | `PlayerInfoMixin` |
+
+自分自身の名前はマスクしない（local player は除外）。
+
+### モード
+
+- `OFF` — 何もしない
+- `BLACKOUT` — `█████` の Unicode フルブロックで上書き（文字数を維持してレイアウト崩れ防止）
+- `OBFUSCATED` — Minecraft の `§k` フォーマット（グリッチモジャモジャ）
+
+### 設定 UI
+
+- **Forge + Embeddium**：Embeddium 設定画面の "Extra Settings" ページにサイクルボタン
+- **NeoForge**：現状 Embeddium 連携未配線。設定はファイル直編集 (`.minecraft/config/extra_video_settings/name_mask.txt`)、または将来 ProfileScreen に追加予定
+- **Fabric + Sodium**：Sodium 設定画面の "Extra Settings" ページにサイクルボタン
+
+### 設定保存先
+
+`.minecraft/config/extra_video_settings/name_mask.txt` に `OFF` / `BLACKOUT` /
+`OBFUSCATED` のいずれかを書いた単一行で保存。ローダー非依存（3 ローダーで共有）。
+
+### 共通コード（common/）
+
+- `common/src/main/java/extravideoset/NameMaskMode.java` — モード列挙
+- `common/src/main/java/extravideoset/client/NameMaskConfig.java` — モード保持 + 永続化
+- `common/src/main/java/extravideoset/client/NameMasker.java` — マスク Component 生成 + プレイヤー名検出
+
+### 共通 Mixin（common/ ではなく各ローダーに同一ソース）
+
+`PlayerInfoMixin` は MC API + Mixin パッケージのみ参照なので、ソースコードは
+3 ローダーで完全同一。ただし Mixin 設定ファイルのパッケージ宣言とランタイム
+クラスローディングの都合で、各ローダーの src ツリーに重複配置している
+（実体 3 ファイルだが内容は identical）。
 
 ## リポジトリ軽量化メモ
 

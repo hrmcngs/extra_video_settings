@@ -47,6 +47,10 @@ dependencies {
     // Embeddium for 1.20.2: no published CurseForge artifact matches the
     // Forge 1.20.1 build we use; the EmbeddiumIntegration class is therefore
     // excluded from the NeoForge source set until a 1.20.2 artifact is wired up.
+    //
+    // Note: no Mixin annotation processor — NeoForge 1.20.2 uses Mojang
+    // mappings at runtime, so the @Inject method names in PlayerInfoMixin
+    // already match the live classes (no refmap remapping needed).
 }
 
 // Share Java sources and resources from ../../common/ (loader-agnostic code)

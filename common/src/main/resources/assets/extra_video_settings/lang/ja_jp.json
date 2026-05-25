@@ -34,5 +34,11 @@
   "extra_video_settings.command.profile_not_found": "プロファイルが見つかりません: %1$s",
   "extra_video_settings.command.error": "エラー: %1$s",
 
-  "extra_video_settings.sodium_page": "追加設定"
+  "extra_video_settings.sodium_page": "追加設定",
+
+  "extra_video_settings.name_mask": "他プレイヤーの名前を伏せる",
+  "extra_video_settings.tooltip.name_mask": "他プレイヤーの名前の表示方法（頭上のネームプレート、チャット、Tab リスト）。",
+  "extra_video_settings.name_mask.off": "オフ",
+  "extra_video_settings.name_mask.blackout": "黒塗り (███)",
+  "extra_video_settings.name_mask.obfuscated": "Obfuscated"
 }

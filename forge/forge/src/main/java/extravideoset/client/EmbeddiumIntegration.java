@@ -11,6 +11,7 @@ import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.binding.compat.VanillaBooleanOptionBinding;
@@ -21,6 +22,8 @@ import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import extravideoset.EVSConfig;
 import extravideoset.ExtraVideoSettingsMod;
+import extravideoset.NameMaskMode;
+import extravideoset.client.NameMaskConfig;
 
 public class EmbeddiumIntegration {
 
@@ -95,6 +98,20 @@ public class EmbeddiumIntegration {
 								(opts, val) -> EVSConfig.DEBUG_LOGGING.set(val),
 								(opts) -> EVSConfig.isDebugEnabled())
 						.setControl(TickBoxControl::new)
+						.setImpact(OptionImpact.LOW)
+						.build())
+				.add(OptionImpl.createBuilder(NameMaskMode.class, VANILLA_STORAGE)
+						.setId(OptionIdentifier.create("extra_video_settings", "name_mask", NameMaskMode.class))
+						.setName(Component.translatable("extra_video_settings.name_mask"))
+						.setTooltip(Component.translatable("extra_video_settings.tooltip.name_mask"))
+						.setBinding(
+								(opts, val) -> NameMaskConfig.setMode(val),
+								(opts) -> NameMaskConfig.getMode())
+						.setControl(opt -> new CyclingControl<>(opt, NameMaskMode.class, new Component[] {
+								Component.translatable("extra_video_settings.name_mask.off"),
+								Component.translatable("extra_video_settings.name_mask.blackout"),
+								Component.translatable("extra_video_settings.name_mask.obfuscated")
+						}))
 						.setImpact(OptionImpact.LOW)
 						.build())
 				.build();

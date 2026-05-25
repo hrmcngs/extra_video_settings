@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
 import extravideoset.client.EmbeddiumIntegration;
+import extravideoset.client.NameMaskConfig;
+import extravideoset.client.NameMaskEvents;
 import extravideoset.client.ProfileScreen;
 import extravideoset.client.SettingsCommand;
 
@@ -26,6 +28,8 @@ public class ExtraVideoSettingsMod {
 
 		SettingsCommand.init();
 		ProfileScreen.registerScreenEvent();
+		NameMaskEvents.init();
+		NameMaskConfig.load();
 
 		LOGGER.info("Extra Video Settings loaded");
 	}
