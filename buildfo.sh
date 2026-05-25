@@ -1,7 +1,7 @@
 #!/bin/bash
 # Forge build. Pass `--offline` to use only the local Gradle cache.
 # Extra args ("$@") are forwarded to gradlew.
-# Built JAR is copied to ../../dist/ for easy collection.
+# Built JAR is written directly to ../dist/ by the build.gradle's build hook.
 #
 # Version is auto-bumped from CurseForge (latest published + 1). Override:
 #   EVS_VERSION=2.3 ./buildfo.sh    # use literal version
@@ -22,11 +22,9 @@ else
     ./gradlew build -Dnet.minecraftforge.gradle.check.certs=false "-PevsVersion=$EVS_VERSION" "$@"
 fi
 
-mkdir -p "$ROOT/dist"
-SRC="$ROOT/forge/forge/build/libs/extra_video_settings-${EVS_VERSION}.jar"
-if [ -f "$SRC" ]; then
-    cp -f "$SRC" "$ROOT/dist/"
-    echo "→ dist/$(basename "$SRC")"
+DIST="$ROOT/dist/extra_video_settings-forge-${EVS_VERSION}.jar"
+if [ -f "$DIST" ]; then
+    echo "→ $DIST"
 else
-    echo "WARN: expected $SRC not found"
+    echo "WARN: expected $DIST not found"
 fi

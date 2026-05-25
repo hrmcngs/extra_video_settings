@@ -7,7 +7,22 @@ plugins {
 // Falls back to a hardcoded value when invoked directly with no project property.
 version = project.findProperty('evsVersion') ?: '1.1'
 group = 'extravideoset'
-archivesBaseName = 'extra_video_settings'
+archivesBaseName = 'extra_video_settings-forge'
+
+// Final reobf'd jar gets copied to the repo-root dist/ as part of `build`,
+// so the shell scripts don't need a separate cp step.
+def evsDistDir = file("$rootDir/../../dist")
+tasks.named('build') {
+    doLast {
+        evsDistDir.mkdirs()
+        def srcJar = jar.archiveFile.get().asFile
+        def destJar = new File(evsDistDir, srcJar.name)
+        if (srcJar.exists()) {
+            destJar.bytes = srcJar.bytes
+            logger.lifecycle "→ ${destJar}"
+        }
+    }
+}
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 

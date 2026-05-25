@@ -1,7 +1,7 @@
 #!/bin/bash
 # Fabric build. Pass `--offline` to use only the local Gradle cache.
 # Extra args ("$@") are forwarded to gradlew.
-# Built JAR is copied to ../../dist/ for easy collection.
+# Built JAR is written directly to ../dist/ by the build.gradle's build hook.
 #
 # Version is auto-bumped from CurseForge (latest published + 1). Override:
 #   EVS_VERSION=2.3 ./buildfa.sh    # use literal version
@@ -20,20 +20,13 @@ else
     ./gradlew build "-PevsVersion=$EVS_VERSION" "$@"
 fi
 
-mkdir -p "$ROOT/dist"
-# Fabric's archivesName includes the minecraft version, so the filename
-# pattern is extra_video_settings-fabric-<mc>-<evs>.jar. Pick the one
-# matching the current EVS_VERSION and skip -dev / -sources.
-SRC=""
-for jar in "$ROOT/fabric/build/libs/"*"-${EVS_VERSION}.jar"; do
-    case "$(basename "$jar")" in
-        *-dev.jar|*-sources.jar) continue ;;
-    esac
-    [ -f "$jar" ] && SRC="$jar"
+# Filename pattern matches base.archivesName in fabric/build.gradle.
+DIST=""
+for jar in "$ROOT/dist/extra_video_settings-fabric-"*"-${EVS_VERSION}.jar"; do
+    [ -f "$jar" ] && DIST="$jar"
 done
-if [ -n "$SRC" ]; then
-    cp -f "$SRC" "$ROOT/dist/"
-    echo "→ dist/$(basename "$SRC")"
+if [ -n "$DIST" ]; then
+    echo "→ $DIST"
 else
-    echo "WARN: no matching jar for version $EVS_VERSION"
+    echo "WARN: no matching dist jar for version $EVS_VERSION"
 fi

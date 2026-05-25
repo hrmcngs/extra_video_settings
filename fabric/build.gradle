@@ -10,6 +10,21 @@ base {
     archivesName = "extra_video_settings-fabric-${project.minecraft_version}"
 }
 
+// Copy the Loom-remapped jar to repo-root dist/ as part of `build`.
+// We pick remapJar specifically (skips intermediate -dev/-sources jars).
+def evsDistDir = file("$rootDir/../dist")
+tasks.named('build') {
+    doLast {
+        evsDistDir.mkdirs()
+        def srcJar = tasks.named('remapJar').get().archiveFile.get().asFile
+        def destJar = new File(evsDistDir, srcJar.name)
+        if (srcJar.exists()) {
+            destJar.bytes = srcJar.bytes
+            logger.lifecycle "→ ${destJar}"
+        }
+    }
+}
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 repositories {

@@ -11,6 +11,20 @@ base {
     archivesName = 'extra_video_settings-neoforge'
 }
 
+// Copy final jar to repo-root dist/ as part of `build`.
+def evsDistDir = file("$rootDir/../../dist")
+tasks.named('build') {
+    doLast {
+        evsDistDir.mkdirs()
+        def srcJar = tasks.jar.archiveFile.get().asFile
+        def destJar = new File(evsDistDir, srcJar.name)
+        if (srcJar.exists()) {
+            destJar.bytes = srcJar.bytes
+            logger.lifecycle "→ ${destJar}"
+        }
+    }
+}
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 runs {
