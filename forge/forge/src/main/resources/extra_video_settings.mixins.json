@@ -6,7 +6,9 @@
   "refmap": "",
   "client": [
     "PlayerInfoMixin",
-    "DeathScreenMixin"
+    "DeathScreenMixin",
+    "ScreenTooltipScrollMixin",
+    "GuiGraphicsTooltipScrollMixin"
   ],
   "injectors": {
     "defaultRequire": 1

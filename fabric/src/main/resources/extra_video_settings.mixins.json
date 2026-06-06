@@ -6,7 +6,9 @@
     "SodiumOptionsGUIMixin",
     "PlayerInfoMixin",
     "EntityRendererNameTagMixin",
-    "DeathScreenMixin"
+    "DeathScreenMixin",
+    "ScreenTooltipScrollMixin",
+    "GuiGraphicsTooltipScrollMixin"
   ],
   "injectors": {
     "defaultRequire": 1
