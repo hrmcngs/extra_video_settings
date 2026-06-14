@@ -7,7 +7,6 @@
     "PlayerInfoMixin",
     "EntityRendererNameTagMixin",
     "DeathScreenMixin",
-    "ScreenTooltipScrollMixin",
     "GuiGraphicsTooltipScrollMixin"
   ],
   "injectors": {

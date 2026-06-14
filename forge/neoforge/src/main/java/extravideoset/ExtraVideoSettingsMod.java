@@ -12,6 +12,7 @@ import extravideoset.client.NameMaskConfig;
 import extravideoset.client.NameMaskEvents;
 import extravideoset.client.ProfileScreen;
 import extravideoset.client.SettingsCommand;
+import extravideoset.client.TooltipScrollEvents;
 import extravideoset.client.VanillaVideoScreenHook;
 
 @Mod("extra_video_settings")
@@ -32,6 +33,7 @@ public class ExtraVideoSettingsMod {
 		NameMaskConfig.load();
 		VanillaVideoScreenHook.register();
 		DeathScreenHook.register();
+		TooltipScrollEvents.init();
 
 		LOGGER.info("Extra Video Settings loaded (NeoForge)");
 	}

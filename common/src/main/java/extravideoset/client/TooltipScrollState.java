@@ -14,12 +14,15 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class TooltipScrollState {
 
-	private static int offset = 0;
+	// Double accumulator so Mac trackpad's small fractional scroll deltas
+	// (~0.05 per event) add up over many events instead of being truncated
+	// to zero by an int cast at every addScroll call.
+	private static double offset = 0;
 	private static Object lastKey = null;
 
 	private TooltipScrollState() {}
 
-	public static int getOffset() { return offset; }
+	public static int getOffset() { return (int) offset; }
 
 	/** Reset the offset whenever the tooltip's target item changes. */
 	public static void onTooltipFor(Object key) {
@@ -42,8 +45,11 @@ public final class TooltipScrollState {
 	}
 
 	/** Shift+wheel up (positive scrollY) reveals upper content,
-	 *  which means translating the rendered tooltip downward. */
+	 *  which means translating the rendered tooltip downward.
+	 *  Pixels-per-unit gain. Mouse wheels report ±1 per click → 10px per step;
+	 *  trackpads report ~0.05 per event and accumulate via the double field. */
 	public static void addScroll(double scrollY) {
-		offset += (int) (scrollY * 10);
+		offset += scrollY * 10.0;
+		extravideoset.ExtraVideoSettingsMod.LOGGER.info("[EVS] tooltip scroll: in={} offset={}", scrollY, offset);
 	}
 }

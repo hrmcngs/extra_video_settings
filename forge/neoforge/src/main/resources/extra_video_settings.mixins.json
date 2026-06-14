@@ -7,7 +7,6 @@
   "client": [
     "PlayerInfoMixin",
     "DeathScreenMixin",
-    "ScreenTooltipScrollMixin",
     "GuiGraphicsTooltipScrollMixin"
   ],
   "injectors": {

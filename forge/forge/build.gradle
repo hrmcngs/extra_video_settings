@@ -1,6 +1,22 @@
+buildscript {
+    repositories {
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+    }
+    dependencies {
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+    }
+}
+
 plugins {
     id 'eclipse'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+}
+
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+    add sourceSets.main, 'extra_video_settings.refmap.json'
+    config 'extra_video_settings.mixins.json'
 }
 
 // Version is taken from -PevsVersion (set by buildfo.sh via scripts/next-version.sh).
@@ -76,6 +92,8 @@ dependencies {
     // Embeddium 0.3.31 for 1.20.1
     compileOnly fg.deobf("curse.maven:embeddium-908741:5681725")
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
+    // Mixin annotation processor — generates extra_video_settings.refmap.json at build time
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 // Share Java sources and resources from ../../common/ (loader-agnostic code)

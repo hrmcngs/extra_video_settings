@@ -9,6 +9,7 @@ import extravideoset.client.NameMaskConfig;
 import extravideoset.client.NameMaskEvents;
 import extravideoset.client.ProfileScreen;
 import extravideoset.client.SettingsCommand;
+import extravideoset.client.TooltipScrollEvents;
 
 public class ExtraVideoSettingsMod implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("ExtraVideoSettings");
@@ -20,6 +21,7 @@ public class ExtraVideoSettingsMod implements ClientModInitializer {
 		ProfileScreen.registerScreenEvent();
 		NameMaskEvents.init();
 		NameMaskConfig.load();
+		TooltipScrollEvents.init();
 		LOGGER.info("Extra Video Settings loaded");
 	}
 

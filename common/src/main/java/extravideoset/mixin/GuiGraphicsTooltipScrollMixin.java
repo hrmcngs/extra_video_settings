@@ -38,8 +38,12 @@ public abstract class GuiGraphicsTooltipScrollMixin {
 	private void evs$tooltipScrollPush(Font font, List<ClientTooltipComponent> components,
 			int x, int y, ClientTooltipPositioner positioner, CallbackInfo ci) {
 		GuiGraphics self = (GuiGraphics) (Object) this;
+		int off = TooltipScrollState.getOffset();
+		if (off != 0) {
+			extravideoset.ExtraVideoSettingsMod.LOGGER.info("[EVS] tooltip render: applying offset={}", off);
+		}
 		self.pose().pushPose();
-		self.pose().translate(0f, (float) TooltipScrollState.getOffset(), 0f);
+		self.pose().translate(0f, (float) off, 0f);
 	}
 
 	@Inject(method = "renderTooltipInternal", at = @At("RETURN"))

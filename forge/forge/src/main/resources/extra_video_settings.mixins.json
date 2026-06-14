@@ -3,11 +3,10 @@
   "package": "extravideoset.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8.5",
-  "refmap": "",
+  "refmap": "extra_video_settings.refmap.json",
   "client": [
     "PlayerInfoMixin",
     "DeathScreenMixin",
-    "ScreenTooltipScrollMixin",
     "GuiGraphicsTooltipScrollMixin"
   ],
   "injectors": {
