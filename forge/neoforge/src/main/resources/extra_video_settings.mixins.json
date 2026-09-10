@@ -7,7 +7,8 @@
   "client": [
     "PlayerInfoMixin",
     "DeathScreenMixin",
-    "GuiGraphicsTooltipScrollMixin"
+    "GuiGraphicsTooltipScrollMixin",
+    "GameRendererZoomMixin"
   ],
   "injectors": {
     "defaultRequire": 1

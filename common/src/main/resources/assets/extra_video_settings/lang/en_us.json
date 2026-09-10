@@ -1,4 +1,6 @@
 {
+  "key.extra_video_settings.zoom": "Zoom (hold)",
+  "key.categories.extra_video_settings": "Extra Video Settings",
   "extra_video_settings.tooltip.fov_effect_scale": "Controls how much the field of view changes with movement speed.",
   "extra_video_settings.tooltip.screen_effect_scale": "Controls the intensity of screen distortion effects like nausea.",
   "extra_video_settings.tooltip.darkness_effect_scale": "Controls the intensity of the Darkness effect pulsing.",

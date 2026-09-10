@@ -1,4 +1,6 @@
 {
+  "key.extra_video_settings.zoom": "ズーム（長押し）",
+  "key.categories.extra_video_settings": "Extra Video Settings",
   "extra_video_settings.tooltip.fov_effect_scale": "移動速度に応じた視野角の変化量を調整します。",
   "extra_video_settings.tooltip.screen_effect_scale": "吐き気などの画面歪みエフェクトの強度を調整します。",
   "extra_video_settings.tooltip.darkness_effect_scale": "暗闇エフェクトの脈動の強度を調整します。",
