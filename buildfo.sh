@@ -22,7 +22,7 @@ else
     ./gradlew build -Dnet.minecraftforge.gradle.check.certs=false "-PevsVersion=$EVS_VERSION" "$@"
 fi
 
-DIST="$ROOT/dist/extra_video_settings-forge-${EVS_VERSION}.jar"
+DIST="$ROOT/dist/extra_video_settings-forge-1.20.1-${EVS_VERSION}.jar"
 if [ -f "$DIST" ]; then
     echo "→ $DIST"
 else

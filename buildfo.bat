@@ -16,5 +16,5 @@ cd /d %ROOT%forge\forge
 call gradlew.bat build -Dnet.minecraftforge.gradle.check.certs=false "-PevsVersion=!EVS_VERSION!" %*
 if errorlevel 1 exit /b %errorlevel%
 if not exist "%ROOT%dist" mkdir "%ROOT%dist"
-copy /Y "build\libs\*.jar" "%ROOT%dist\" >nul
+copy /Y "build\libs\extra_video_settings-forge-1.20.1-!EVS_VERSION!.jar" "%ROOT%dist\" >nul
 echo Copied -^> %ROOT%dist\

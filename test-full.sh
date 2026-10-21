@@ -17,7 +17,7 @@ echo ""
 echo "Building Forge JAR..."
 "$DIR/buildfo.sh"
 
-JAR="$DIR/forge/forge/build/libs/extra_video_settings-1.1.jar"
+JAR="$DIR/forge/forge/build/libs/extra_video_settings-forge-1.20.1-1.4.jar"
 if [ ! -f "$JAR" ]; then
     echo "Build failed: JAR not found at $JAR"
     exit 1

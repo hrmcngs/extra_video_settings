@@ -151,22 +151,22 @@ cfwidget が到達不能なら：
 
 ```
 dist/
-├─ extra_video_settings-1.1.jar                     # Forge
-├─ extra_video_settings-neoforge-1.1.jar            # NeoForge
-└─ extra_video_settings-fabric-1.20.1-1.1.jar       # Fabric
+├─ extra_video_settings-forge-1.20.1-1.4.jar       # Forge
+├─ extra_video_settings-neoforge-1.20.2-1.4.jar    # NeoForge
+└─ extra_video_settings-fabric-1.20.1-1.4.jar      # Fabric
 ```
 
 ビルドツリー内のオリジナル：
 
 | ローダー | パス |
 |----------|------|
-| Forge    | `forge/forge/build/libs/extra_video_settings-1.1.jar` |
-| NeoForge | `forge/neoforge/build/libs/extra_video_settings-neoforge-1.1.jar` |
-| Fabric   | `fabric/build/libs/extra_video_settings-fabric-1.20.1-1.1.jar` |
+| Forge    | `forge/forge/build/libs/extra_video_settings-forge-1.20.1-1.4.jar` |
+| NeoForge | `forge/neoforge/build/libs/extra_video_settings-neoforge-1.20.2-1.4.jar` |
+| Fabric   | `fabric/build/libs/extra_video_settings-fabric-1.20.1-1.4.jar` |
 
 各 JAR には `common/` のリソース・クラスが自動的に同梱される。
 
-`dist/` は `.gitignore` 済み（ビルド成果物なのでリポジトリには入れない）。
+`dist/` 内の配布用 JAR は Git の管理対象です。
 
 ## インストール
 

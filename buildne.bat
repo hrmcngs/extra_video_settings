@@ -15,5 +15,5 @@ cd /d %ROOT%forge\neoforge
 call gradlew.bat build "-PevsVersion=!EVS_VERSION!" %*
 if errorlevel 1 exit /b %errorlevel%
 if not exist "%ROOT%dist" mkdir "%ROOT%dist"
-copy /Y "build\libs\*.jar" "%ROOT%dist\" >nul
+copy /Y "build\libs\extra_video_settings-neoforge-1.20.2-!EVS_VERSION!.jar" "%ROOT%dist\" >nul
 echo Copied -^> %ROOT%dist\

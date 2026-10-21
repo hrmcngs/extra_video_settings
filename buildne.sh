@@ -20,7 +20,7 @@ else
     ./gradlew build "-PevsVersion=$EVS_VERSION" "$@"
 fi
 
-DIST="$ROOT/dist/extra_video_settings-neoforge-${EVS_VERSION}.jar"
+DIST="$ROOT/dist/extra_video_settings-neoforge-1.20.2-${EVS_VERSION}.jar"
 if [ -f "$DIST" ]; then
     echo "→ $DIST"
 else

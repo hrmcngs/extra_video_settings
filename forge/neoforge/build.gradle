@@ -8,7 +8,7 @@ version = project.findProperty('evsVersion') ?: '1.1'
 group = 'extravideoset'
 
 base {
-    archivesName = 'extra_video_settings-neoforge'
+    archivesName = 'extra_video_settings-neoforge-1.20.2'
 }
 
 // Copy final jar to repo-root dist/ as part of `build`.

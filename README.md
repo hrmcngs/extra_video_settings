@@ -100,9 +100,9 @@ Cキーを押している間、視野角を通常の1/4にしてズームしま�
 
 各ローダーに合った JAR を `.minecraft/mods/` フォルダに入れる：
 
-- Forge: `forge/forge/build/libs/extra_video_settings-1.1.jar`
-- NeoForge: `forge/neoforge/build/libs/extra_video_settings-neoforge-1.1.jar`
-- Fabric: `fabric/build/libs/extra_video_settings-fabric-1.20.1-1.1.jar`
+- Forge: `forge/forge/build/libs/extra_video_settings-forge-1.20.1-1.4.jar`
+- NeoForge: `forge/neoforge/build/libs/extra_video_settings-neoforge-1.20.2-1.4.jar`
+- Fabric: `fabric/build/libs/extra_video_settings-fabric-1.20.1-1.4.jar`
 
 ## ライセンス
 
