@@ -8,7 +8,10 @@
     "EntityRendererNameTagMixin",
     "DeathScreenMixin",
     "GuiGraphicsTooltipScrollMixin",
-    "GameRendererZoomMixin"
+    "GameRendererZoomMixin",
+    "LanguageManagerSearchMixin",
+    "FullTextSearchTreeMixin",
+    "JeiSearchMixin"
   ],
   "injectors": {
     "defaultRequire": 1
