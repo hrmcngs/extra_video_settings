@@ -37,7 +37,8 @@ run/
 runs/
 
 # Built JAR collection
-dist/
+!/dist/
+!/dist/*.jar
 
 # IDE
 .idea/
