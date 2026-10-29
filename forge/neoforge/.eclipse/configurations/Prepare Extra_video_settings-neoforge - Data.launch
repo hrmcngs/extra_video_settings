@@ -3,7 +3,7 @@
     <listAttribute key="tasks">
         <listEntry value="dataIdeBeforeRun"></listEntry>
     </listAttribute>
-    <stringAttribute key="working_dir" value="${workspace_loc:extra_video_settings-neoforge}"></stringAttribute>
+    <stringAttribute key="working_dir" value="${workspace_loc:extra_video_settings-neoforge-neoforge}"></stringAttribute>
     <stringAttribute key="gradle_distribution" value="GRADLE_DISTRIBUTION(WRAPPER)"></stringAttribute>
     <booleanAttribute key="offline_mode" value="false"></booleanAttribute>
     <booleanAttribute key="show_console_view" value="true"></booleanAttribute>
