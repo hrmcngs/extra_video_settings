@@ -97,3 +97,21 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+
+// Eclipse launches MOD_CLASSES from bin/main. Refresh it after Gradle has
+// compiled the shared sources, including loader-specific recipe search helpers.
+// Otherwise Eclipse can leave stale classes containing "Unresolved compilation
+// problem" even when the Gradle build succeeds.
+def refreshEclipseClientClasses = tasks.register('refreshEclipseClientClasses', Copy) {
+    dependsOn tasks.named('classes')
+    from sourceSets.main.output
+    into layout.projectDirectory.dir('bin/main')
+}
+// Kept for the checked-in Eclipse launch configuration; NeoGradle 7.0.50
+// does not create this task itself.
+tasks.register('clientIdeBeforeRun') {
+    dependsOn refreshEclipseClientClasses,
+            'writeMinecraftClasspathClient',
+            'neoFormJoined1.20.2-20231019.002635DownloadAssets',
+            'neoFormJoined1.20.2-20231019.002635ExtractNatives'
+}

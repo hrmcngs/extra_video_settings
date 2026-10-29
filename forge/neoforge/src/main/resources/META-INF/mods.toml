@@ -28,3 +28,10 @@ description='''Restores vanilla video settings (FOV Effects, Glint Speed, etc.) 
     versionRange="[1.20.2,1.21)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.extra_video_settings]]
+    modId="jei"
+    mandatory=false
+    versionRange=""
+    ordering="AFTER"
+    side="CLIENT"

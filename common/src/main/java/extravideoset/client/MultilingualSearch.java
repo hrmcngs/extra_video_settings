@@ -1,6 +1,7 @@
 package extravideoset.client;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -45,6 +46,9 @@ public final class MultilingualSearch {
         if (stack.isEmpty()) return List.of();
         Set<String> result = new LinkedHashSet<>(translations.getOrDefault(
                 stack.getItem().getDescriptionId(stack), List.of()));
+        // Shared by creative search and JEI, regardless of tooltip settings or
+        // whether translations have been loaded. Also covers modded item IDs.
+        result.add(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
         // Includes variant-specific names, e.g. potions, when supplied by the item.
         if (stack.getHoverName().getContents() instanceof TranslatableContents translated) {
             result.addAll(translations.getOrDefault(translated.getKey(), List.of()));

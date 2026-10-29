@@ -32,3 +32,10 @@ config="extra_video_settings.mixins.json"
     versionRange="[0.1.0,)"
     ordering="AFTER"
     side="CLIENT"
+
+[[dependencies.extra_video_settings]]
+    modId="jei"
+    mandatory=false
+    versionRange=""
+    ordering="AFTER"
+    side="CLIENT"
